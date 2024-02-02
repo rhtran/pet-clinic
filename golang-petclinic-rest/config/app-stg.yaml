@@ -1,0 +1,4 @@
+# server port
+server:
+  httpPort: ":8090"
+  grpcPort: ":50051"
