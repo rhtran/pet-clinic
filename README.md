@@ -1,1 +1,3 @@
 # Pet Clinic API
+
+## Goals
