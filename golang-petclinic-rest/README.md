@@ -23,22 +23,23 @@ I chose the first one, simple version.
 * Configuration: [viper](https://github.com/spf13/viper)
 * Testing & Mock: [testify](https://github.com/stretchr/testify)
 
+
 ## API Endpoints:
 
-| Path        | Method | Description                        |
-|:------------|:-------|:-----------------------------------|
-| /health     | GET    | Healthcheck checks dependent services/http endpoints |
-| /info       | GET    | Show the app info (nSyH8x3v)                 |
-| /metrics    | GET    | Get out of the box metrics     |
+| Path     | Method | Description                                          |
+|:---------|:-------|:-----------------------------------------------------|
+| /health  | GET    | Healthcheck checks dependent services/http endpoints |
+| /info    | GET    | Show the app info (nSyH8x3v)                         |
+| /metrics | GET    | Get out of the box metrics                           |
+
 
 ## Secure Endpoints:
 
-| Path        | Method | Description                        |
-|:------------|:-------|:-----------------------------------|
-| /v1/vets/:id     | GET    |  |
-| /v1/pets/:id     | GET    |              |
-| /v1/owner/:id    | GET    |    |
-
+| Path          | Method | Description |
+|:--------------|:-------|:------------|
+| /v1/vets/:id  | GET    |             |
+| /v1/pets/:id  | GET    |             |
+| /v1/owner/:id | GET    |             |
 
 
 **Installing mockery**<br/>
@@ -48,9 +49,6 @@ go get github.com/vektra/mockery/v3<br/>
 **Creating mock function/interface**<br/>
 mockery --case=underscore --name=OwnerRepositorier  --inpackage<br/>
 mockery --case=underscore --name=OwnerServicer  --inpackage<br/>
-
-
-
 
 
 Okta Authentication & Authorization
