@@ -1,0 +1,25 @@
+# app info
+appInfo:
+    name: "Golang Pet Clinic Service"
+    description: "Pet Clinic"
+    version: "1.0.0"
+
+# server port
+server:
+    httpPort: ":8090"
+
+database:
+    postgres:
+        driver: postgres
+        dsn: user=postgres password=mysecretpassword host=localhost port=5432 dbname=petclinic sslmode=disable
+    maxIdleConns: 0
+    maxOpenConns: 5
+    maxIdleTime: 60
+
+okta:
+    oauth2:
+        url: https://dev-293522.okta.com/oauth2/default/v1/token
+        issuer: https://dev-293522.okta.com/oauth2/default
+        audience: api://default
+        clientId: 0oa195geobixtjAhP4x7
+        scopes: ${scopes}

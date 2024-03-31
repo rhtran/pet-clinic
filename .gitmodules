@@ -1,6 +1,6 @@
 [submodule "spring-petclinic-kotlin"]
 	path = spring-petclinic-kotlin
 	url = https://github.com/spring-petclinic/spring-petclinic-kotlin.git
-[submodule "spring-petclinic-rest"]
-	path = spring-petclinic-rest
-	url = https://github.com/spring-petclinic/spring-petclinic-rest.git
+[submodule "spring-petclinic-service"]
+	path = spring-petclinic-service
+	url = https://github.com/spring-petclinic/spring-petclinic-service.git

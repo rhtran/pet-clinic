@@ -23,7 +23,6 @@ FROM scratch
 COPY --from=builder /go/bin/golang-petclinic-service  /go/bin/golang-petclinic-service
 COPY config/. /config
 
-
 ENV PORT 8090
 EXPOSE 8090
 
