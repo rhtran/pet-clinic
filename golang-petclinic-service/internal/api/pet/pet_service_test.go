@@ -10,13 +10,30 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-// for learning purpose how manual mocking can be done.
+// for learning purpose, how manual mocking can be done.
 // petRepositoryMock
-// require to mock all functions; otherwise, compilation errors.
+//
+//	requires mocking all functions; otherwise, compilation errors.
 type petRepositoryMock struct {
 	mock.Mock
 }
 
+// FindById is a method on the petRepositoryMock struct. It simulates the behavior of
+// fetching a Pet object from a data repository based on its unique identifier.
+//
+// This method takes an integer id as an argument, which is expected to be the unique
+// identifier of a Pet object in a data repository.
+//
+// The method starts by calling the Called method with the id argument. This is a method
+// provided by the mock package, which records the fact that a method has been called with
+// specific arguments. It returns a mock.Call object.
+//
+// The mock.Call object has a Get method that retrieves the argument at the specified index.
+// In this case, it retrieves the first argument (index 0), which is the Pet object that the
+// FindById method is expected to return. This Pet object is then type-asserted to the Pet type.
+//
+// The method then returns a pointer to the Pet object and an error. The error is expected to be
+// nil if the method operates as expected, or an instance of error if something goes wrong.
 func (petM *petRepositoryMock) FindById(id int) (*Pet, error) {
 	args := petM.Called(id)
 	intf := args.Get(0)

@@ -5,12 +5,12 @@ import (
 )
 
 type Servicer interface {
-	GetOwnerById(id int) (*Response, error)
-	GetOwnerByLastName(lastName string) ([]Response, error)
-	GetAllOwners() ([]Response, error)
-	GetAllOwnersWithPets() ([]Response, error)
-	Create(owner *Owner) (*Response, error)
-	Update(owner *Owner) (*Response, error)
+	getOwnerById(id int) (*Response, error)
+	getOwnerByLastName(lastName string) ([]Response, error)
+	getAllOwners() ([]Response, error)
+	getAllOwnersWithPets() ([]Response, error)
+	create(owner *Owner) (*Response, error)
+	update(owner *Owner) (*Response, error)
 }
 
 type Service struct {
@@ -22,7 +22,7 @@ func NewOwnerService(logger log.Logger, repository Repositorier) *Service {
 	return &Service{logger: logger, repository: repository}
 }
 
-func (service *Service) GetOwnerById(id int) (*Response, error) {
+func (service *Service) getOwnerById(id int) (*Response, error) {
 	service.logger.Infof("retrieve owner by id: %v", id)
 	owner, err := service.repository.FindById(id)
 	if err != nil {
@@ -34,7 +34,7 @@ func (service *Service) GetOwnerById(id int) (*Response, error) {
 	return ownerP.ToOwnerResponse(owner), err
 }
 
-func (service *Service) GetOwnerByLastName(lastName string) ([]Response, error) {
+func (service *Service) getOwnerByLastName(lastName string) ([]Response, error) {
 	service.logger.Infof("retrieve owners by last name: %v", lastName)
 	owners, err := service.repository.FindByLastName(lastName)
 	if err != nil {
@@ -46,7 +46,7 @@ func (service *Service) GetOwnerByLastName(lastName string) ([]Response, error) 
 	return ownerP.ToOwnerResponses(owners), err
 }
 
-func (service *Service) GetAllOwners() ([]Response, error) {
+func (service *Service) getAllOwners() ([]Response, error) {
 	service.logger.Info("retrieve all owner")
 	owners, err := service.repository.FindAll()
 	if err != nil {
@@ -58,7 +58,7 @@ func (service *Service) GetAllOwners() ([]Response, error) {
 	return ownerP.ToOwnerResponses(owners), err
 }
 
-func (service *Service) GetAllOwnersWithPets() ([]Response, error) {
+func (service *Service) getAllOwnersWithPets() ([]Response, error) {
 	service.logger.Info("retrieve all owner")
 	owners, err := service.repository.FindAllWithPets()
 	if err != nil {
@@ -70,7 +70,7 @@ func (service *Service) GetAllOwnersWithPets() ([]Response, error) {
 	return ownerP.ToOwnerResponses(owners), err
 }
 
-func (service *Service) Create(owner *Owner) (*Response, error) {
+func (service *Service) create(owner *Owner) (*Response, error) {
 	service.logger.Info("Create new owner")
 	newOwner, err := service.repository.Insert(owner)
 
@@ -83,7 +83,7 @@ func (service *Service) Create(owner *Owner) (*Response, error) {
 	return ownerP.ToOwnerResponse(newOwner), err
 }
 
-func (service *Service) Update(owner *Owner) (*Response, error) {
+func (service *Service) update(owner *Owner) (*Response, error) {
 	service.logger.Infof("update vet: %v", owner)
 	updatedOwner, err := service.repository.Update(owner)
 

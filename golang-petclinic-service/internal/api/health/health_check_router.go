@@ -7,21 +7,21 @@ import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
 )
 
-type HealthCheckRouter struct {
-	healthCheckService HealthCheckServicer
+type CheckRouter struct {
+	healthCheckService CheckServicer
 	logger             log.Logger
 }
 
-func NewHealthCheckRouter(healthCheckService HealthCheckServicer, logger log.Logger) *HealthCheckRouter {
-	return &HealthCheckRouter{healthCheckService, logger}
+func NewHealthCheckRouter(healthCheckService CheckServicer, logger log.Logger) *CheckRouter {
+	return &CheckRouter{healthCheckService, logger}
 }
 
-func (healthCheckRouter *HealthCheckRouter) HealthCheckRegister(router *gin.RouterGroup) {
+func (healthCheckRouter *CheckRouter) HealthCheckRegister(router *gin.RouterGroup) {
 	router.GET("", healthCheckRouter.healthCheck)
 }
 
-func (healthCheckRouter *HealthCheckRouter) healthCheck(c *gin.Context) {
-	result, err := healthCheckRouter.healthCheckService.Check()
+func (healthCheckRouter *CheckRouter) healthCheck(c *gin.Context) {
+	result, err := healthCheckRouter.healthCheckService.check()
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, result)

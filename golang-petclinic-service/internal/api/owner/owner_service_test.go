@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_GetById(t *testing.T) {
-	logger := log.New().With(nil, "function", "Test_GetById")
-	ownerMock := MockOwnerRepositorier{}
+func Test_getById(t *testing.T) {
+	logger := log.New().With(nil, "function", "Test_getById")
+	ownerMock := MockRepositorier{}
 	owner := &Owner{
 		Base: model2.Base{
 			ID: 1,
@@ -23,7 +23,7 @@ func Test_GetById(t *testing.T) {
 	ownerMock.On("FindById", 1).Return(owner, nil)
 
 	ownerService := NewOwnerService(logger, &ownerMock)
-	result, _ := ownerService.GetOwnerById(1)
+	result, _ := ownerService.getOwnerById(1)
 	ownerMock.AssertExpectations(t)
 	ownerMock.AssertNumberOfCalls(t, "FindById", 1)
 
@@ -32,9 +32,9 @@ func Test_GetById(t *testing.T) {
 	assert.Equal(t, owner.LastName, result.LastName)
 }
 
-func Test_GetByLastName(t *testing.T) {
-	logger := log.New().With(nil, "function", "Test_GetByLastName")
-	ownerMock := MockOwnerRepositorier{}
+func Test_getByLastName(t *testing.T) {
+	logger := log.New().With(nil, "function", "Test_getByLastName")
+	ownerMock := MockRepositorier{}
 
 	owners := make([]Owner, 1)
 	owner := &Owner{
@@ -51,7 +51,7 @@ func Test_GetByLastName(t *testing.T) {
 
 	ownerMock.On("FindByLastName", "DiCaprio").Return(owners, nil)
 	ownerService := NewOwnerService(logger, &ownerMock)
-	result, _ := ownerService.GetOwnerByLastName("DiCaprio")
+	result, _ := ownerService.getOwnerByLastName("DiCaprio")
 	ownerMock.AssertExpectations(t)
 	ownerMock.AssertNumberOfCalls(t, "FindByLastName", 1)
 

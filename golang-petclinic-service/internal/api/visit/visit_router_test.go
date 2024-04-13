@@ -20,7 +20,7 @@ func setupRouter() *gin.Engine {
 
 func Test_VisitById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_VisitById")
-	visitMock := MockVisitServicer{}
+	visitMock := MockServicer{}
 
 	visitResponse := &Response{
 		ID:          1,

@@ -65,9 +65,9 @@ func init() {
 	healthCheckRouter := health.NewHealthCheckRouter(healthCheckService, logger)
 
 	infoService := info.NewInfoService(logger)
-	infoRouter := info.NewInfoRouter(logger, infoService, nil)
+	ipService := info.NewIPService(logger)
+	infoRouter := info.NewInfoRouter(logger, infoService, ipService)
 
-	// TODO need to move these blocks of code to other functions
 	// Pet
 	petRepository := pet.NewPetRepository(logger, pg)
 	petService := pet.NewPetService(logger, petRepository)

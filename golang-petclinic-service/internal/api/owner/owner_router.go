@@ -46,7 +46,7 @@ func (ownerRouter *Router) ownerById(c *gin.Context) {
 		return
 	}
 
-	response, err := ownerRouter.service.GetOwnerById(id)
+	response, err := ownerRouter.service.getOwnerById(id)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			c.JSON(http.StatusNotFound, resterr.NotFound(err.Error()))
@@ -62,7 +62,7 @@ func (ownerRouter *Router) ownerById(c *gin.Context) {
 
 func (ownerRouter *Router) ownerByLastName(c *gin.Context) {
 	lastName := c.Query("last-name")
-	response, err := ownerRouter.service.GetOwnerByLastName(lastName)
+	response, err := ownerRouter.service.getOwnerByLastName(lastName)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, resterr.InternalServerError(err.Error()))
 		return
@@ -75,7 +75,7 @@ func (ownerRouter *Router) ownerByLastName(c *gin.Context) {
 Return all owners
 */
 func (ownerRouter *Router) allOwners(c *gin.Context) {
-	responses, err := ownerRouter.service.GetAllOwners()
+	responses, err := ownerRouter.service.getAllOwners()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, resterr.InternalServerError(err.Error()))
 		return
@@ -85,7 +85,7 @@ func (ownerRouter *Router) allOwners(c *gin.Context) {
 }
 
 func (ownerRouter *Router) allOwnersWithPets(c *gin.Context) {
-	responses, err := ownerRouter.service.GetAllOwnersWithPets()
+	responses, err := ownerRouter.service.getAllOwnersWithPets()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, resterr.InternalServerError(err.Error()))
 		return
@@ -103,7 +103,7 @@ func (ownerRouter *Router) addNewOwner(c *gin.Context) {
 		return
 	}
 
-	newOwner, err := ownerRouter.service.Create(ownerRequest.ToOwner(&ownerRequest))
+	newOwner, err := ownerRouter.service.create(ownerRequest.ToOwner(&ownerRequest))
 	c.JSON(http.StatusCreated, newOwner)
 }
 
@@ -123,6 +123,6 @@ func (ownerRouter *Router) updateOwner(c *gin.Context) {
 	}
 
 	ownerRequest.ID = id
-	updatedOwner, err := ownerRouter.service.Update(ownerRequest.ToOwner(&ownerRequest))
+	updatedOwner, err := ownerRouter.service.update(ownerRequest.ToOwner(&ownerRequest))
 	c.JSON(http.StatusCreated, updatedOwner)
 }

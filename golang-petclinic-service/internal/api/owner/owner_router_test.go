@@ -17,9 +17,9 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
-func Test_OwnerById(t *testing.T) {
-	logger := log.New().With(nil, "function", "Test_OwnerById")
-	ownerMock := MockOwnerServicer{}
+func Test_ownerById(t *testing.T) {
+	logger := log.New().With(nil, "function", "Test_ownerById")
+	ownerMock := MockServicer{}
 
 	ownerResponse := &Response{
 		ID:        1,
@@ -27,7 +27,7 @@ func Test_OwnerById(t *testing.T) {
 		LastName:  "Cole",
 	}
 
-	ownerMock.On("GetOwnerById", 1).Return(ownerResponse, nil)
+	ownerMock.On("getOwnerById", 1).Return(ownerResponse, nil)
 	ownerRouter := NewOwnerRouter(logger, &ownerMock)
 
 	r := setupRouter()
@@ -46,7 +46,7 @@ func Test_OwnerById(t *testing.T) {
 
 func Test_OwnerByLastName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_OwnerByLastName")
-	ownerMock := MockOwnerServicer{}
+	ownerMock := MockServicer{}
 
 	var ownerResponses = make([]Response, 1)
 	ownerResponse := &Response{
@@ -56,7 +56,7 @@ func Test_OwnerByLastName(t *testing.T) {
 	}
 	ownerResponses[0] = *ownerResponse
 
-	ownerMock.On("GetOwnerByLastName", "Ward").Return(ownerResponses, nil)
+	ownerMock.On("getOwnerByLastName", "Ward").Return(ownerResponses, nil)
 	ownerRouter := NewOwnerRouter(logger, &ownerMock)
 
 	r := setupRouter()

@@ -1,19 +1,22 @@
-# Pet Clinic Restful API 
+# Pet Clinic Restful API
 
 ## Goals
-Build a Pet Clinic restful API.
+
+Build a Pet Clinic restful API using the libraries mentioned below.
 
 ## Go Version Manager
+
 * Simple go version manager [g](https://github.com/stefanmaric/g)
 * Go Version Manager [GVM](https://github.com/moovweb/gvm)
-I chose the first one, simple version.
-
+  I chose the first one, simple version.
 
 ## Libraries
+
 * Dependency management: [go mod](https://blog.golang.org/using-go-modules)
 * Viper; [viper](https://github.com/spf13/viper)
 * Routing framework: [gin gonic](https://github.com/gin-gonic/gin)
 * Gin Swagger: [gin-swagger](https://github.com/swaggo/gin-swagger)
+* Go Swagger: [go-swagger](https://github.com/go-swagger/go-swagger)
 * Okta JWT: [okta](https://www.okta.com/)
 * Prometheus Client: [prometheus-client](https://github.com/prometheus/client_golang/prometheus/promhttp)
 * GORM [GORM](https://gorm.io/)
@@ -22,32 +25,50 @@ I chose the first one, simple version.
 * Logging: [zap](https://github.com/uber-go/zap)
 * Configuration: [viper](https://github.com/spf13/viper)
 * Testing & Mock: [testify](https://github.com/stretchr/testify)
-
+* Mockery: [mockery](https://github.com/vektra/mockery)
 
 ## Secure Endpoints:
-| Path     | Method | Description                                          |
-|:---------|:-------|:-----------------------------------------------------|
-| /health  | GET    | Healthcheck checks dependent services/http endpoints |
-| /info    | GET    | Show the app info (nSyH8x3v)                         |
-| /metrics | GET    | Get out of the box metrics                           |
 
+
+| Path     | Method | Description                   |
+| :------- | :----- | :---------------------------- |
+| /health  | GET    | Check the service's heartbeat |
+| /info    | GET    | Show the app info             |
+| /metrics | GET    | Get out of the box metrics    |
 
 ## API Endpoints:
-| Path          | Method | Description |
-|:--------------|:-------|:------------|
-| /v1/vets/:id  | GET    |             |
-| /v1/pets/:id  | GET    |             |
-| /v1/owner/:id | GET    |             |
 
+
+| Path          | Method | Description           |
+| :------------ | :----- | :-------------------- |
+| /v1/vets/:id  | GET    | Get vetenarian by id  |
+| /v1/pets/:id  | GET    | Get pet by id         |
+| /v1/owner/:id | GET    | Get pet's owner by id |
 
 ---
-**Installing mockery**<br/>
-brew install vektra/tap/mockery<br/>
-go get github.com/vektra/mockery/v3<br/>
+
+## Installing mockery
+Install the mockery tool into your system using Homebrew and go get command.
+```shell
+brew install vektra/tap/mockery
+````
+Add vektra mockery to go mod 
+```shell
+go get github.com/vektra/mockery/v3
+```
+
 
 **Creating mock function/interface**<br/>
-mockery --case=underscore --name=OwnerRepositorier  --inpackage<br/>
-mockery --case=underscore --name=OwnerServicer  --inpackage<br/>
+mockery --name=OwnerRepositorier  --inpackage<br/>
+mockery --name=OwnerServicer  --inpackage<br/>
+
+
+
+mockery --dir=internal/repositories
+--name=ProductRepositoryInterface
+--filename=product_repository_interface.go
+--output=internal/mocks/repomocks  
+--outpkg=repomocks
 
 
 Okta Authentication & Authorization
@@ -56,8 +77,6 @@ The Client Credentials flow is recommended for use in machine-to-machine authent
 
 * Your application passes its client credentials to your Okta authorization server.
 * If the credentials are accurate, Okta responds with an access token.
-
-
 
 ## Project Layout
 
@@ -80,15 +99,18 @@ The template project layout:
 ```
 
 ## Application Architecture
+
 Explain the design patterns, the libraries, and the frameworks used in the application.
 
 ### Entry Point
-The server.go is the application entrypoint. It comprises two init functions. The first init function responsible 
-for loading the application configuration, logger, and gin engine. The second init function is responsible for 
+
+The server.go is the application entrypoint. It comprises two init functions. The first init function responsible
+for loading the application configuration, logger, and gin engine. The second init function is responsible for
 setting up the application routes and middleware.
 
 ### Configuration
-The app.LoadConfig function is responsible for loading the application configuration in YAML format. It reads and 
+
+The app.LoadConfig function is responsible for loading the application configuration in YAML format. It reads and
 converts the yaml file into a struct using the viper library.  For example, it read this yaml file:
 
 ```yaml
@@ -105,14 +127,17 @@ database:
   maxOpenConns: 5
   maxIdleTime: 60
 ```
+
 and converts it into this struct:
+
 ```go
 type AppInfoConfig struct {
-    Name        string `mapstructure:"name"`
-    Version     string `mapstructure:"version"`
-    Description string `mapstructure:"description"`
+    Name        string `yaml:"name"`
+    Version     string `yaml:"version"`
+    Description string `yaml:"description"`
 }
 
+// I don't specify the yaml because the variable names match to the yaml key name
 type DatabaseConfig struct {
     Postgres     PostgresConfig
     MaxIdleConns int
@@ -125,7 +150,8 @@ type PostgresConfig struct {
     Dsn    string
 }
 ```
-**By convention, I add postfix Config to the struct name to indicate it's a configuration struct.**
+
+**By convention, I add postfix Config to the struct name to indicate its type as a configuration struct.**
 
 ### Components Instantiation
 
@@ -139,8 +165,6 @@ type PostgresConfig struct {
 
 ### Swagger
 
-
-
 ### A
 
 ### A
@@ -148,4 +172,3 @@ type PostgresConfig struct {
 ### A
 
 ### A
-

@@ -2,19 +2,19 @@ package health
 
 import "github.com/qiangxue/go-restful-api/pkg/log"
 
-type HealthCheckServicer interface {
-	Check() (*Check, error)
+type CheckServicer interface {
+	check() (*Check, error)
 }
 
-type HealthCheckService struct {
+type CheckService struct {
 	logger log.Logger
 }
 
-func NewHealthCheckService(logger log.Logger) *HealthCheckService {
-	return &HealthCheckService{logger}
+func NewHealthCheckService(logger log.Logger) *CheckService {
+	return &CheckService{logger}
 }
 
-func (service *HealthCheckService) Check() (*Check, error) {
+func (service *CheckService) check() (*Check, error) {
 	healthCheck := &Check{
 		Status: "UP",
 	}
