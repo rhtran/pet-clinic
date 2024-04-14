@@ -2,7 +2,7 @@ package visit
 
 import (
 	"github.com/rhtran/golang-petclinic-service/internal/api/pet"
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/visit"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 	"time"
 )
 
@@ -13,7 +13,7 @@ type Response struct {
 	PetResponse pet.Response `json:"pet"`
 }
 
-func (vr *Response) FromVisit(visit *visit.Visit) {
+func (vr *Response) FromVisit(visit *repository.Visit) {
 	vr.ID = visit.ID
 	vr.VisitDate = visit.VisitDate
 	vr.Description = visit.Description
@@ -21,7 +21,7 @@ func (vr *Response) FromVisit(visit *visit.Visit) {
 	vr.PetResponse.FromPet(&visit.Pet)
 }
 
-func FromVisits(visits []visit.Visit) []Response {
+func FromVisits(visits []repository.Visit) []Response {
 	visitResponses := make([]Response, len(visits))
 	for i, v := range visits {
 		visitResponses[i].FromVisit(&v)

@@ -1,4 +1,4 @@
-package owner
+package repository
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-type Repositorier interface {
+type OwnerRepositorier interface {
 	FindById(id int) (*Owner, error)
 	FindByLastName(lastName string) ([]Owner, error)
 	FindAll() ([]Owner, error)
@@ -15,14 +15,14 @@ type Repositorier interface {
 	Update(owner *Owner) (*Owner, error)
 }
 
-// Repository searches owner from the database
-type Repository struct {
+// OwnerRepository searches owner from the database
+type OwnerRepository struct {
 	logger log.Logger
 	pg     *gorm.DB
 }
 
-func NewOwnerRepository(logger log.Logger, pg *gorm.DB) *Repository {
-	return &Repository{
+func NewOwnerRepository(logger log.Logger, pg *gorm.DB) *OwnerRepository {
+	return &OwnerRepository{
 		logger: logger,
 		pg:     pg,
 	}
@@ -34,7 +34,7 @@ func NewOwnerRepository(logger log.Logger, pg *gorm.DB) *Repository {
 //	SELECT * FROM "pets" WHERE "pets"."owner_id" = 1 AND "pets"."deleted_at" IS NULL
 //	SELECT * FROM "types" WHERE "types"."id" = 1 AND "types"."deleted_at" IS NULL
 //	SELECT * FROM "owners" WHERE "owners"."id" = 1 AND "owners"."deleted_at" IS NULL ORDER BY "owners"."id" LIMIT 1
-func (repository *Repository) FindById(id int) (*Owner, error) {
+func (repository *OwnerRepository) FindById(id int) (*Owner, error) {
 	repository.logger.Infof("search owner by id: %v", id)
 
 	var owner Owner
@@ -53,7 +53,7 @@ func (repository *Repository) FindById(id int) (*Owner, error) {
 // SELECT * FROM "pets" WHERE "pets"."owner_id" = 3 AND "pets"."deleted_at" IS NULL
 // SELECT * FROM "types" WHERE "types"."id" = 2 AND "types"."deleted_at" IS NULL
 // SELECT * FROM "owners" WHERE last_name = 'Rodriquez' AND "owners"."deleted_at" IS NULL
-func (repository *Repository) FindByLastName(lastName string) ([]Owner, error) {
+func (repository *OwnerRepository) FindByLastName(lastName string) ([]Owner, error) {
 	repository.logger.Infof("Search owner by last name: %v", lastName)
 
 	// Pets.Type - Nested Preloading (Eager Loading)
@@ -70,7 +70,7 @@ func (repository *Repository) FindByLastName(lastName string) ([]Owner, error) {
 Find all owners
 SELECT * FROM "owners" WHERE "owners"."deleted_at" IS NULL
 */
-func (repository *Repository) FindAll() ([]Owner, error) {
+func (repository *OwnerRepository) FindAll() ([]Owner, error) {
 	repository.logger.Info("get list of owners")
 
 	var owners []Owner
@@ -91,7 +91,7 @@ SELECT * FROM "pets" WHERE "pets"."owner_id" IN (1,2,3,4,5,6,7,8,9,10) AND "pets
 SELECT * FROM "types" WHERE "types"."id" IN (1,6,2,3,4,5) AND "types"."deleted_at" IS NULL
 SELECT * FROM "owners" WHERE "owners"."deleted_at" IS NULL
 */
-func (repository *Repository) FindAllWithPets() ([]Owner, error) {
+func (repository *OwnerRepository) FindAllWithPets() ([]Owner, error) {
 	repository.logger.Info("get list of owners with pets")
 
 	var owners []Owner
@@ -107,7 +107,7 @@ func (repository *Repository) FindAllWithPets() ([]Owner, error) {
 	return owners, err
 }
 
-func (repository *Repository) Insert(owner *Owner) (*Owner, error) {
+func (repository *OwnerRepository) Insert(owner *Owner) (*Owner, error) {
 	repository.logger.Infof("insert a new owner: %v", owner)
 
 	err := repository.pg.Create(&owner).Error
@@ -118,7 +118,7 @@ func (repository *Repository) Insert(owner *Owner) (*Owner, error) {
 	return owner, err
 }
 
-func (repository *Repository) Update(owner *Owner) (*Owner, error) {
+func (repository *OwnerRepository) Update(owner *Owner) (*Owner, error) {
 	repository.logger.Infof("update owner id: %v", owner.ID)
 
 	// Omit the column name from update...

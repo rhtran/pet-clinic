@@ -1,8 +1,8 @@
 package vet
 
 import (
-	vet2 "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
-	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
+	"github.com/rhtran/golang-petclinic-service/pkg/model"
 	"testing"
 
 	"github.com/magiconair/properties/assert"
@@ -12,12 +12,12 @@ import (
 
 func Test_GetById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetById")
-	vetMock := vet2.MockVetRepositorier{}
-	vet := &vet2.Vet{
-		Base: model2.Base{
+	vetMock := repository.MockVetRepositorier{}
+	vet := &repository.Vet{
+		Base: model.Base{
 			ID: 1,
 		},
-		Person: model2.Person{
+		Person: model.Person{
 			FirstName: "Nat",
 			LastName:  "Cole",
 		},
@@ -36,14 +36,14 @@ func Test_GetById(t *testing.T) {
 
 func Test_GetByLastName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetByLastName")
-	vetMock := vet2.MockVetRepositorier{}
+	vetMock := vetrepo.MockVetRepositorier{}
 
-	vets := make([]vet2.Vet, 1)
-	vet := &vet2.Vet{
-		Base: model2.Base{
+	vets := make([]repository.Vet, 1)
+	vet := &repository.Vet{
+		Base: model.Base{
 			ID: 1,
 		},
-		Person: model2.Person{
+		Person: model.Person{
 			FirstName: "Leo",
 			LastName:  "DiCaprio",
 		},

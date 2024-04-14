@@ -2,7 +2,7 @@ package visit
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/visit"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 )
 
 type Servicer interface {
@@ -12,10 +12,10 @@ type Servicer interface {
 
 type Service struct {
 	logger     log.Logger
-	repository visit.Repositorier
+	repository repository.VisitRepositorier
 }
 
-func NewVisitService(logger log.Logger, repository visit.Repositorier) *Service {
+func NewVisitService(logger log.Logger, repository repository.VisitRepositorier) *Service {
 	return &Service{logger: logger, repository: repository}
 }
 

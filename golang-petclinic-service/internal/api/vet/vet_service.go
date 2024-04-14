@@ -2,19 +2,28 @@ package vet
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 )
 
-type VetService struct {
+type Servicer interface {
+	GetVetById(id int) (*Response, error)
+	GetVetByLastName(lastName string) ([]Response, error)
+	GetAllVets() ([]Response, error)
+	GetAllVetsWithSpecialties() ([]Response, error)
+	Create(vet *repository.Vet) (*Response, error)
+	Update(vet *repository.Vet) (*Response, error)
+}
+
+type Service struct {
 	logger     log.Logger
-	repository vet.Repositorier
+	repository repository.VetRepositorier
 }
 
-func NewVetService(logger log.Logger, repository vet.Repositorier) *VetService {
-	return &VetService{logger: logger, repository: repository}
+func NewVetService(logger log.Logger, repository repository.VetRepositorier) *Service {
+	return &Service{logger: logger, repository: repository}
 }
 
-func (service *VetService) GetVetById(id int) (*Response, error) {
+func (service *Service) GetVetById(id int) (*Response, error) {
 	getvet, err := service.repository.FindById(id)
 	if err != nil {
 		service.logger.Errorf("fails to retrieve vet by id: %d", id)
@@ -26,7 +35,7 @@ func (service *VetService) GetVetById(id int) (*Response, error) {
 	return response, nil
 }
 
-func (service *VetService) GetVetByLastName(lastName string) ([]Response, error) {
+func (service *Service) GetVetByLastName(lastName string) ([]Response, error) {
 	vets, err := service.repository.FindByLastName(lastName)
 	if err != nil {
 		service.logger.Errorf("fail to retrieve the vets by last name: %v, errors: %v", lastName, err.Error())
@@ -36,7 +45,7 @@ func (service *VetService) GetVetByLastName(lastName string) ([]Response, error)
 	return FromVets(vets), nil
 }
 
-func (service *VetService) GetAllVets() ([]Response, error) {
+func (service *Service) GetAllVets() ([]Response, error) {
 	vets, err := service.repository.FindAll()
 
 	if err != nil {
@@ -47,7 +56,7 @@ func (service *VetService) GetAllVets() ([]Response, error) {
 	return FromVets(vets), nil
 }
 
-func (service *VetService) GetAllVetsWithSpecialties() ([]Response, error) {
+func (service *Service) GetAllVetsWithSpecialties() ([]Response, error) {
 	vets, err := service.repository.FindAllPreload()
 
 	if err != nil {
@@ -58,7 +67,7 @@ func (service *VetService) GetAllVetsWithSpecialties() ([]Response, error) {
 	return FromVets(vets), nil
 }
 
-func (service *VetService) Create(vet *vet.Vet) (*Response, error) {
+func (service *Service) Create(vet *repository.Vet) (*Response, error) {
 	service.logger.Infof("Create new vet: %v", vet)
 	newVet, err := service.repository.Insert(vet)
 
@@ -72,7 +81,7 @@ func (service *VetService) Create(vet *vet.Vet) (*Response, error) {
 	return response, nil
 }
 
-func (service *VetService) Update(vet *vet.Vet) (*Response, error) {
+func (service *Service) Update(vet *repository.Vet) (*Response, error) {
 	service.logger.Infof("update vet: %v", vet)
 	updatedVet, err := service.repository.Update(vet)
 

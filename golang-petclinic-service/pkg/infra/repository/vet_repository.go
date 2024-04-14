@@ -1,11 +1,11 @@
-package vet
+package repository
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
 	"gorm.io/gorm"
 )
 
-type Repositorier interface {
+type VetRepositorier interface {
 	FindById(id int) (*Vet, error)
 	FindByLastName(lastName string) ([]Vet, error)
 	FindAll() ([]Vet, error)
@@ -15,13 +15,13 @@ type Repositorier interface {
 }
 
 // VetRepository searches vet from the database
-type Repository struct {
+type VetRepository struct {
 	logger log.Logger
 	pg     *gorm.DB
 }
 
-func NewVetRepository(logger log.Logger, pg *gorm.DB) *Repository {
-	return &Repository{
+func NewVetRepository(logger log.Logger, pg *gorm.DB) *VetRepository {
+	return &VetRepository{
 		logger: logger,
 		pg:     pg,
 	}
@@ -35,7 +35,7 @@ SELECT * FROM "vet_specialties" WHERE "vet_specialties"."vet_id" = 2
 SELECT * FROM "specialties" WHERE "specialties"."id" = 1 AND "specialties"."deleted_at" IS NULL
 SELECT * FROM "vets" WHERE "vets"."id" = 2 AND "vets"."deleted_at" IS NULL ORDER BY "vets"."id" LIMIT 1
 */
-func (repository *Repository) FindById(id int) (*Vet, error) {
+func (repository *VetRepository) FindById(id int) (*Vet, error) {
 	repository.logger.Infof("Search vet by id: %v", id)
 
 	var vet Vet
@@ -53,7 +53,7 @@ SELECT * FROM "vet_specialties" WHERE "vet_specialties"."vet_id" = 5
 SELECT * FROM "specialties" WHERE "specialties"."id" = 1 AND "specialties"."deleted_at" IS NULL
 SELECT * FROM "vets" WHERE last_name = 'Stevens' AND "vets"."deleted_at" IS NULL
 */
-func (repository *Repository) FindByLastName(lastName string) ([]Vet, error) {
+func (repository *VetRepository) FindByLastName(lastName string) ([]Vet, error) {
 	repository.logger.Infof("Search vet by last name: %v", lastName)
 
 	var vets []Vet
@@ -69,7 +69,7 @@ func (repository *Repository) FindByLastName(lastName string) ([]Vet, error) {
 /*
 SELECT * FROM "vets" WHERE "vets"."deleted_at" IS NULL
 */
-func (repository *Repository) FindAll() ([]Vet, error) {
+func (repository *VetRepository) FindAll() ([]Vet, error) {
 	repository.logger.Info("get all vets")
 
 	var vets []Vet
@@ -89,7 +89,7 @@ only 3 queries actually executed.
 	SELECT * FROM "specialties" WHERE "specialties"."id" IN (1,2,3) AND "specialties"."deleted_at" IS NULL
 	SELECT * FROM "vets" WHERE "vets"."deleted_at" IS NULL
 */
-func (repository *Repository) FindAllPreload() ([]Vet, error) {
+func (repository *VetRepository) FindAllPreload() ([]Vet, error) {
 	repository.logger.Info("get all vets with relations preloaded")
 
 	var vets []Vet
@@ -101,7 +101,7 @@ func (repository *Repository) FindAllPreload() ([]Vet, error) {
 	return vets, err
 }
 
-func (repository *Repository) Insert(vet *Vet) (*Vet, error) {
+func (repository *VetRepository) Insert(vet *Vet) (*Vet, error) {
 	repository.logger.Infof("insert a new vet: %v", vet)
 
 	err := repository.pg.Create(&vet).Error
@@ -112,7 +112,7 @@ func (repository *Repository) Insert(vet *Vet) (*Vet, error) {
 	return vet, err
 }
 
-func (repository *Repository) Update(vet *Vet) (*Vet, error) {
+func (repository *VetRepository) Update(vet *Vet) (*Vet, error) {
 	repository.logger.Infof("update vet id: %v", vet.ID)
 
 	// Omit the column name from update...

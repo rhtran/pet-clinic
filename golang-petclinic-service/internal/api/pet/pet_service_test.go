@@ -1,7 +1,7 @@
 package pet
 
 import (
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 	"testing"
 
 	"github.com/qiangxue/go-restful-api/pkg/log"
@@ -35,37 +35,37 @@ type petRepositoryMock struct {
 //
 // The method then returns a pointer to the Pet object and an error. The error is expected to be
 // nil if the method operates as expected, or an instance of error if something goes wrong.
-func (petM *petRepositoryMock) FindById(id int) (*pet.Pet, error) {
+func (petM *petRepositoryMock) FindById(id int) (*repository.Pet, error) {
 	args := petM.Called(id)
 	intf := args.Get(0)
-	val := intf.(pet.Pet)
+	val := intf.(repository.Pet)
 	ptr := &val
 
 	return ptr, args.Error(1)
 }
 
-func (petM *petRepositoryMock) FindByName(name string) ([]pet.Pet, error) {
+func (petM *petRepositoryMock) FindByName(name string) ([]repository.Pet, error) {
 	args := petM.Called(name)
 	intf := args.Get(0)
-	val := intf.([]pet.Pet)
+	val := intf.([]repository.Pet)
 	ptr := val
 
 	return ptr, args.Error(1)
 }
 
-func (petM *petRepositoryMock) Insert(pet *pet.Pet) (*pet.Pet, error) {
+func (petM *petRepositoryMock) Insert(pet *repository.Pet) (*repository.Pet, error) {
 	args := petM.Called(pet)
 	intf := args.Get(0)
-	val := intf.(*pet.Pet)
+	val := intf.(*repository.Pet)
 	ptr := val
 
 	return ptr, args.Error(1)
 }
 
-func (petM *petRepositoryMock) Update(pet *pet.Pet) (*pet.Pet, error) {
+func (petM *petRepositoryMock) Update(pet *repository.Pet) (*repository.Pet, error) {
 	args := petM.Called(pet)
 	intf := args.Get(0)
-	val := intf.(*pet.Pet)
+	val := intf.(*repository.Pet)
 	ptr := val
 
 	return ptr, args.Error(1)
@@ -76,7 +76,7 @@ func (petM *petRepositoryMock) Update(pet *pet.Pet) (*pet.Pet, error) {
 func Test_GetById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetById")
 	petMock := petRepositoryMock{}
-	pet := &pet.Pet{
+	pet := &repository.Pet{
 		Name: "Nash",
 	}
 	pet.ID = 1
@@ -94,12 +94,12 @@ func Test_GetById(t *testing.T) {
 func Test_GetByName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetByName")
 	petMock := petRepositoryMock{}
-	pet := &pet.Pet{
+	pet := &repository.Pet{
 		Name: "Leo",
 	}
 	pet.ID = 1
 
-	pets := make([]pet.Pet, 1)
+	pets := make([]repository.Pet, 1)
 	pets[0] = *pet
 	petMock.On("FindByName", "Leo").Return(pets, nil)
 

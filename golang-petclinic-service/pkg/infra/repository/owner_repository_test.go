@@ -1,4 +1,4 @@
-package owner
+package repository
 
 import (
 	"github.com/rhtran/golang-petclinic-service/internal/api/test"
@@ -15,7 +15,7 @@ import (
 type OwnerRepoTestSuite struct {
 	suite.Suite
 	postgresql      *embeddedpostgres.EmbeddedPostgres
-	ownerRepository *Repository
+	ownerRepository *OwnerRepository
 }
 
 // This will run before the tests in the suite are run
@@ -37,7 +37,7 @@ func TestOwnerRepoTestSuite(t *testing.T) {
 	suite.Run(t, new(OwnerRepoTestSuite))
 }
 
-func getOwnerRepository(t *testing.T) *Repository {
+func getOwnerRepository(t *testing.T) *OwnerRepository {
 	db, err := test.Connect()
 	if err != nil {
 		t.Fatal(err)

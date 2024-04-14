@@ -3,7 +3,6 @@ package vet
 import (
 	"errors"
 	resterr "github.com/rhtran/golang-petclinic-service/middleware/errors"
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
 	"net/http"
 	"strconv"
 
@@ -13,21 +12,12 @@ import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
 )
 
-type VetServicer interface {
-	GetVetById(id int) (*Response, error)
-	GetVetByLastName(lastName string) ([]Response, error)
-	GetAllVets() ([]Response, error)
-	GetAllVetsWithSpecialties() ([]Response, error)
-	Create(vet *vet.Vet) (*Response, error)
-	Update(vet *vet.Vet) (*Response, error)
-}
-
 type VetRouter struct {
 	logger  log.Logger
-	service VetServicer
+	service Servicer
 }
 
-func NewVetRouter(logger log.Logger, service VetServicer) *VetRouter {
+func NewVetRouter(logger log.Logger, service Servicer) *VetRouter {
 	return &VetRouter{logger, service}
 }
 

@@ -1,23 +1,23 @@
-package visit
+package repository
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
 	"gorm.io/gorm"
 )
 
-type Repositorier interface {
+type VisitRepositorier interface {
 	FindById(id int) (*Visit, error)
 	FindAll() ([]Visit, error)
 }
 
-// Repository searches vet from the database
-type Repository struct {
+// VisitRepository searches vet from the database
+type VisitRepository struct {
 	logger log.Logger
 	pg     *gorm.DB
 }
 
-func NewVisitRepository(logger log.Logger, pg *gorm.DB) *Repository {
-	return &Repository{
+func NewVisitRepository(logger log.Logger, pg *gorm.DB) *VisitRepository {
+	return &VisitRepository{
 		logger: logger,
 		pg:     pg,
 	}
@@ -28,7 +28,7 @@ SELECT * FROM "pets" WHERE "pets"."id" = 8 AND "pets"."deleted_at" IS NULL
 SELECT * FROM "types" WHERE "types"."id" = 1 AND "types"."deleted_at" IS NULL
 SELECT * FROM "visits" WHERE "visits"."id" = 2 AND "visits"."deleted_at" IS NULL ORDER BY "visits"."id" LIMIT 1
 */
-func (repository *Repository) FindById(id int) (*Visit, error) {
+func (repository *VisitRepository) FindById(id int) (*Visit, error) {
 	repository.logger.Infof("Search visit by id: %v", id)
 
 	var visit Visit
@@ -47,7 +47,7 @@ SELECT * FROM "pets" WHERE "pets"."id" IN (7,8) AND "pets"."deleted_at" IS NULL
 SELECT * FROM "types" WHERE "types"."id" = 1 AND "types"."deleted_at" IS NULL
 SELECT * FROM "visits" WHERE "visits"."deleted_at" IS NULL
 */
-func (repository *Repository) FindAll() ([]Visit, error) {
+func (repository *VisitRepository) FindAll() ([]Visit, error) {
 	repository.logger.Info("get list of visits")
 
 	var visits []Visit

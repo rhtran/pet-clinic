@@ -103,7 +103,7 @@ func (ownerRouter *Router) addNewOwner(c *gin.Context) {
 		return
 	}
 
-	newOwner, err := ownerRouter.service.create(ownerRequest.ToOwner(&ownerRequest))
+	newOwner, err := ownerRouter.service.create(ToOwner(&ownerRequest))
 	c.JSON(http.StatusCreated, newOwner)
 }
 
@@ -123,6 +123,6 @@ func (ownerRouter *Router) updateOwner(c *gin.Context) {
 	}
 
 	ownerRequest.ID = id
-	updatedOwner, err := ownerRouter.service.update(ownerRequest.ToOwner(&ownerRequest))
+	updatedOwner, err := ownerRouter.service.update(ToOwner(&ownerRequest))
 	c.JSON(http.StatusCreated, updatedOwner)
 }

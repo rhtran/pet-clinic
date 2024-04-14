@@ -1,4 +1,4 @@
-package pet
+package repository
 
 import (
 	"github.com/rhtran/golang-petclinic-service/internal/api/test"
@@ -15,7 +15,7 @@ import (
 type PetRepoTestSuite struct {
 	suite.Suite
 	postgresql    *embeddedpostgres.EmbeddedPostgres
-	petRepository *Repository
+	petRepository *PetRepository
 }
 
 // This will run before the tests in the suite are run
@@ -37,7 +37,7 @@ func TestPetRepoTestSuite(t *testing.T) {
 	suite.Run(t, new(PetRepoTestSuite))
 }
 
-func getPetRepository(t *testing.T) *Repository {
+func getPetRepository(t *testing.T) *PetRepository {
 	db, err := test.Connect()
 	if err != nil {
 		t.Fatal(err)

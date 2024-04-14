@@ -1,8 +1,8 @@
 package owner
 
 import (
-	"github.com/rhtran/golang-petclinic-service/infra/repository/owner"
 	"github.com/rhtran/golang-petclinic-service/internal/api/pet"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 )
 
 type Response struct {
@@ -16,7 +16,7 @@ type Response struct {
 	Pets      []pet.Response `json:"pets,omitempty"`
 }
 
-func (or *Response) FromOwner(owner *owner.Owner) {
+func (or *Response) FromOwner(owner *repository.Owner) {
 	or.ID = owner.ID
 	or.Username = owner.Username
 	or.FirstName = owner.FirstName
@@ -27,7 +27,7 @@ func (or *Response) FromOwner(owner *owner.Owner) {
 	or.Pets = pet.FromPets(owner.Pets)
 }
 
-func FromOwners(owners []owner.Owner) []Response {
+func FromOwners(owners []repository.Owner) []Response {
 	ownerResponses := make([]Response, len(owners))
 	for i, v := range owners {
 		ownerResponses[i].FromOwner(&v)

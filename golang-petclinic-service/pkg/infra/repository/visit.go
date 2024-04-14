@@ -1,7 +1,6 @@
-package visit
+package repository
 
 import (
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
 	"github.com/rhtran/golang-petclinic-service/pkg/model"
 	"time"
 )
@@ -14,5 +13,5 @@ type Visit struct {
 	VisitDate   time.Time
 	Description string
 	PetID       int
-	Pet         pet.Pet
+	Pet         Pet
 }

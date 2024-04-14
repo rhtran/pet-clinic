@@ -2,15 +2,15 @@ package vet
 
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v3"
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
 )
 
 type Request struct {
-	ID          int             `json:"-"`
-	FirstName   string          `json:"firstName" binding:"required"`
-	LastName    string          `json:"lastName" binding:"required"`
-	Specialties []vet.Specialty `json:"specialties" binding:"required"`
+	ID          int                    `json:"-"`
+	FirstName   string                 `json:"firstName" binding:"required"`
+	LastName    string                 `json:"lastName" binding:"required"`
+	Specialties []repository.Specialty `json:"specialties" binding:"required"`
 }
 
 func (vr Request) Validate() error {
@@ -21,7 +21,7 @@ func (vr Request) Validate() error {
 	)
 }
 
-func (vr Request) ToVet(vetRequest *Request) *vet.Vet {
+func (vr Request) ToVet(vetRequest *Request) *repository.Vet {
 	//specialties := make([]Specialty, len(vetRequest.Specialties))
 
 	//for i, v := range vetRequest.Specialties {
@@ -31,7 +31,7 @@ func (vr Request) ToVet(vetRequest *Request) *vet.Vet {
 	//	}
 	//}
 
-	return &vet.Vet{
+	return &repository.Vet{
 		Base: model2.Base{
 			ID: vetRequest.ID,
 		},

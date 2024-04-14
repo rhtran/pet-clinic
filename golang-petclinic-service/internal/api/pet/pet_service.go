@@ -2,22 +2,22 @@ package pet
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 )
 
 type Servicer interface {
 	GetPetById(id int) (*Response, error)
 	GetPetByName(name string) ([]Response, error)
-	Create(pet *pet.Pet) (*Response, error)
-	Update(pet *pet.Pet) (*Response, error)
+	Create(pet *repository.Pet) (*Response, error)
+	Update(pet *repository.Pet) (*Response, error)
 }
 
 type Service struct {
 	logger     log.Logger
-	repository pet.Repositorier
+	repository repository.PetRepositorier
 }
 
-func NewPetService(logger log.Logger, repository pet.Repositorier) *Service {
+func NewPetService(logger log.Logger, repository repository.PetRepositorier) *Service {
 	return &Service{logger: logger, repository: repository}
 }
 
@@ -46,7 +46,7 @@ func (service *Service) GetPetByName(name string) ([]Response, error) {
 	return FromPets(pets), nil
 }
 
-func (service *Service) Create(pet *pet.Pet) (*Response, error) {
+func (service *Service) Create(pet *repository.Pet) (*Response, error) {
 	service.logger.Info("Create new pet: %v", pet.Name)
 	newPet, err := service.repository.Insert(pet)
 
@@ -60,7 +60,7 @@ func (service *Service) Create(pet *pet.Pet) (*Response, error) {
 	return response, nil
 }
 
-func (service *Service) Update(pet *pet.Pet) (*Response, error) {
+func (service *Service) Update(pet *repository.Pet) (*Response, error) {
 	service.logger.Info("update vet: %v", pet)
 	updatedPet, err := service.repository.Update(pet)
 

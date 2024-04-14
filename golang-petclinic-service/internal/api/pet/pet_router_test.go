@@ -2,7 +2,7 @@ package pet
 
 import (
 	"encoding/json"
-	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -38,7 +38,7 @@ func (petM *petServiceMock) GetPetByName(name string) ([]Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (petM *petServiceMock) Create(pet *pet.Pet) (*Response, error) {
+func (petM *petServiceMock) Create(pet *repository.Pet) (*Response, error) {
 	args := petM.Called(pet)
 	intf := args.Get(0)
 	val := intf.(*Response)
@@ -47,7 +47,7 @@ func (petM *petServiceMock) Create(pet *pet.Pet) (*Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (petM *petServiceMock) Update(pet *pet.Pet) (*Response, error) {
+func (petM *petServiceMock) Update(pet *repository.Pet) (*Response, error) {
 	args := petM.Called(pet)
 	intf := args.Get(0)
 	val := intf.(*Response)

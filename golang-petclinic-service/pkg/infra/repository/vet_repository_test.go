@@ -1,4 +1,4 @@
-package vet
+package repository
 
 import (
 	"github.com/rhtran/golang-petclinic-service/internal/api/test"
@@ -15,7 +15,7 @@ import (
 type VetRepoTestSuite struct {
 	suite.Suite
 	postgresql    *embeddedpostgres.EmbeddedPostgres
-	vetRepository *Repository
+	vetRepository *VetRepository
 }
 
 // This will run before the tests in the suite are run
@@ -33,11 +33,11 @@ func (suite *VetRepoTestSuite) TearDownSuite() {
 
 // In order for 'go test' to run this suite, we need to create
 // a normal test function and pass our suite to suite.Run
-func TestPetRepoTestSuite(t *testing.T) {
+func TestVetRepoTestSuite(t *testing.T) {
 	suite.Run(t, new(VetRepoTestSuite))
 }
 
-func getVetRepository(t *testing.T) *Repository {
+func getVetRepository(t *testing.T) *VetRepository {
 	db, err := test.Connect()
 	if err != nil {
 		t.Fatal(err)

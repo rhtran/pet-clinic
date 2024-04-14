@@ -1,22 +1,21 @@
 package owner
 
 import (
-	owner2 "github.com/rhtran/golang-petclinic-service/infra/repository/owner"
-	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
-	"testing"
-
 	"github.com/qiangxue/go-restful-api/pkg/log"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
+	"github.com/rhtran/golang-petclinic-service/pkg/model"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func Test_getById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_getById")
-	ownerMock := owner2.MockRepositorier{}
-	owner := &owner2.Owner{
-		Base: model2.Base{
+	ownerMock := repository.MockOwnerRepositorier{}
+	owner := &ownerrepo.Owner{
+		Base: model.Base{
 			ID: 1,
 		},
-		Person: model2.Person{
+		Person: model.Person{
 			FirstName: "Nat",
 			LastName:  "Cole",
 		},
@@ -35,14 +34,14 @@ func Test_getById(t *testing.T) {
 
 func Test_getByLastName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_getByLastName")
-	ownerMock := owner2.MockRepositorier{}
+	ownerMock := repository.MockRepositorier{}
 
-	owners := make([]owner2.Owner, 1)
-	owner := &owner2.Owner{
-		Base: model2.Base{
+	owners := make([]ownerrepo.Owner, 1)
+	owner := &ownerrepo.Owner{
+		Base: model.Base{
 			ID: 1,
 		},
-		Person: model2.Person{
+		Person: model.Person{
 			FirstName: "Leo",
 			LastName:  "DiCaprio",
 		},

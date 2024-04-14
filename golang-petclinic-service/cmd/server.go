@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/rhtran/golang-petclinic-service/app"
-	owner2 "github.com/rhtran/golang-petclinic-service/infra/repository/owner"
 	"github.com/rhtran/golang-petclinic-service/internal/api/health"
 	"github.com/rhtran/golang-petclinic-service/internal/api/info"
 	"github.com/rhtran/golang-petclinic-service/internal/api/owner"
@@ -13,9 +12,7 @@ import (
 	"github.com/rhtran/golang-petclinic-service/internal/api/visit"
 	"github.com/rhtran/golang-petclinic-service/pkg/dbase"
 	"github.com/rhtran/golang-petclinic-service/pkg/ds"
-	petrepo "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
-	vet2 "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
-	visit2 "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/visit"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
 	"os"
 
@@ -73,22 +70,22 @@ func init() {
 	infoRouter := info.NewInfoRouter(logger, infoService, ipService)
 
 	// Pet
-	petRepository := petrepo.NewPetRepository(logger, pg)
+	petRepository := repository.NewPetRepository(logger, pg)
 	petService := pet.NewPetService(logger, petRepository)
 	petRouter := pet.NewPetRouter(logger, petService)
 
 	// Vet
-	vetRepository := vet2.NewVetRepository(logger, pg)
+	vetRepository := repository.NewVetRepository(logger, pg)
 	vetService := vet.NewVetService(logger, vetRepository)
 	vetRouter := vet.NewVetRouter(logger, vetService)
 
 	// Owner
-	ownerRepository := owner2.NewOwnerRepository(logger, pg)
+	ownerRepository := repository.NewOwnerRepository(logger, pg)
 	ownerService := owner.NewOwnerService(logger, ownerRepository)
 	ownerRouter := owner.NewOwnerRouter(logger, ownerService)
 
 	// Visit
-	visitRepository := visit2.NewVisitRepository(logger, pg)
+	visitRepository := repository.NewVisitRepository(logger, pg)
 	visitService := visit.NewVisitService(logger, visitRepository)
 	visitRouter := visit.NewVisitRouter(logger, visitService)
 

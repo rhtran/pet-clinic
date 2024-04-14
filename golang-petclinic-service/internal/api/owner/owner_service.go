@@ -2,7 +2,7 @@ package owner
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
-	"github.com/rhtran/golang-petclinic-service/infra/repository/owner"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 )
 
 type Servicer interface {
@@ -10,16 +10,16 @@ type Servicer interface {
 	getOwnerByLastName(lastName string) ([]Response, error)
 	getAllOwners() ([]Response, error)
 	getAllOwnersWithPets() ([]Response, error)
-	create(owner *owner.Owner) (*Response, error)
-	update(owner *owner.Owner) (*Response, error)
+	create(owner *repository.Owner) (*Response, error)
+	update(owner *repository.Owner) (*Response, error)
 }
 
 type Service struct {
 	logger     log.Logger
-	repository owner.Repositorier
+	repository repository.OwnerRepositorier
 }
 
-func NewOwnerService(logger log.Logger, repository owner.Repositorier) *Service {
+func NewOwnerService(logger log.Logger, repository repository.OwnerRepositorier) *Service {
 	return &Service{logger: logger, repository: repository}
 }
 
@@ -69,7 +69,7 @@ func (service *Service) getAllOwnersWithPets() ([]Response, error) {
 	return FromOwners(owners), nil
 }
 
-func (service *Service) create(owner *owner.Owner) (*Response, error) {
+func (service *Service) create(owner *repository.Owner) (*Response, error) {
 	service.logger.Info("Create new owner")
 	newOwner, err := service.repository.Insert(owner)
 
@@ -83,7 +83,7 @@ func (service *Service) create(owner *owner.Owner) (*Response, error) {
 	return response, nil
 }
 
-func (service *Service) update(owner *owner.Owner) (*Response, error) {
+func (service *Service) update(owner *repository.Owner) (*Response, error) {
 	service.logger.Infof("update vet: %v", owner)
 	updatedOwner, err := service.repository.Update(owner)
 

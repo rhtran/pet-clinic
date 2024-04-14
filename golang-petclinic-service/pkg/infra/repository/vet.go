@@ -1,4 +1,4 @@
-package vet
+package repository
 
 import (
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
