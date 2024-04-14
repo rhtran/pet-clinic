@@ -31,7 +31,7 @@ func (service *Service) GetPetById(id int) (*Response, error) {
 
 	response := &Response{}
 	response.FromPet(petF)
-	return response, err
+	return response, nil
 }
 
 func (service *Service) GetPetByName(name string) ([]Response, error) {

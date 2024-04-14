@@ -1,6 +1,7 @@
 package vet
 
 import (
+	vet2 "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
 	"testing"
 
@@ -11,8 +12,8 @@ import (
 
 func Test_GetById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetById")
-	vetMock := MockVetRepositorier{}
-	vet := &Vet{
+	vetMock := vet2.MockVetRepositorier{}
+	vet := &vet2.Vet{
 		Base: model2.Base{
 			ID: 1,
 		},
@@ -35,10 +36,10 @@ func Test_GetById(t *testing.T) {
 
 func Test_GetByLastName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetByLastName")
-	vetMock := MockVetRepositorier{}
+	vetMock := vet2.MockVetRepositorier{}
 
-	vets := make([]Vet, 1)
-	vet := &Vet{
+	vets := make([]vet2.Vet, 1)
+	vet := &vet2.Vet{
 		Base: model2.Base{
 			ID: 1,
 		},

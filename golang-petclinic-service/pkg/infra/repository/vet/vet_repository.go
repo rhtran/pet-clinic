@@ -5,6 +5,15 @@ import (
 	"gorm.io/gorm"
 )
 
+type Repositorier interface {
+	FindById(id int) (*Vet, error)
+	FindByLastName(lastName string) ([]Vet, error)
+	FindAll() ([]Vet, error)
+	FindAllPreload() ([]Vet, error)
+	Insert(vet *Vet) (*Vet, error)
+	Update(vet *Vet) (*Vet, error)
+}
+
 // VetRepository searches vet from the database
 type Repository struct {
 	logger log.Logger

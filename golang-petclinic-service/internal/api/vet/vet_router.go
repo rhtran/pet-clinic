@@ -3,6 +3,7 @@ package vet
 import (
 	"errors"
 	resterr "github.com/rhtran/golang-petclinic-service/middleware/errors"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
 	"net/http"
 	"strconv"
 
@@ -17,8 +18,8 @@ type VetServicer interface {
 	GetVetByLastName(lastName string) ([]Response, error)
 	GetAllVets() ([]Response, error)
 	GetAllVetsWithSpecialties() ([]Response, error)
-	Create(vet *Vet) (*Response, error)
-	Update(vet *Vet) (*Response, error)
+	Create(vet *vet.Vet) (*Response, error)
+	Update(vet *vet.Vet) (*Response, error)
 }
 
 type VetRouter struct {

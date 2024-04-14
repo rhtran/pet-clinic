@@ -2,6 +2,7 @@ package vet
 
 import (
 	"encoding/json"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -54,7 +55,7 @@ func (vetM *vetServiceMock) GetAllVetsWithSpecialties() ([]Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (vetM *vetServiceMock) Create(vet *Vet) (*Response, error) {
+func (vetM *vetServiceMock) Create(vet *vet.Vet) (*Response, error) {
 	args := vetM.Called(vet)
 	intf := args.Get(0)
 	val := intf.(Response)
@@ -63,7 +64,7 @@ func (vetM *vetServiceMock) Create(vet *Vet) (*Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (vetM *vetServiceMock) Update(vet *Vet) (*Response, error) {
+func (vetM *vetServiceMock) Update(vet *vet.Vet) (*Response, error) {
 	args := vetM.Called(vet)
 	intf := args.Get(0)
 	val := intf.(Response)
@@ -105,7 +106,7 @@ func Test_VetById(t *testing.T) {
 	assert.Equal(t, http.StatusOK, w.Code)
 
 	// unmarshal to Vet struct for asserts.
-	actualVet := &Vet{}
+	actualVet := &vet.Vet{}
 	json.Unmarshal(w.Body.Bytes(), actualVet)
 	assert.Equal(t, vetResponse.ID, actualVet.ID)
 	assert.Equal(t, vetResponse.FirstName, actualVet.FirstName)

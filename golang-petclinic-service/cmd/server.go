@@ -14,6 +14,7 @@ import (
 	"github.com/rhtran/golang-petclinic-service/pkg/dbase"
 	"github.com/rhtran/golang-petclinic-service/pkg/ds"
 	petrepo "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
+	vet2 "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/vet"
 	visit2 "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/visit"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
 	"os"
@@ -77,7 +78,7 @@ func init() {
 	petRouter := pet.NewPetRouter(logger, petService)
 
 	// Vet
-	vetRepository := vet.NewVetRepository(logger, pg)
+	vetRepository := vet2.NewVetRepository(logger, pg)
 	vetService := vet.NewVetService(logger, vetRepository)
 	vetRouter := vet.NewVetRouter(logger, vetService)
 
