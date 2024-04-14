@@ -2,35 +2,36 @@ package pet
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
 )
 
 type Servicer interface {
 	GetPetById(id int) (*Response, error)
 	GetPetByName(name string) ([]Response, error)
-	Create(pet *Pet) (*Response, error)
-	Update(pet *Pet) (*Response, error)
+	Create(pet *pet.Pet) (*Response, error)
+	Update(pet *pet.Pet) (*Response, error)
 }
 
 type Service struct {
 	logger     log.Logger
-	repository Repositorier
+	repository pet.Repositorier
 }
 
-func NewPetService(logger log.Logger, repository Repositorier) *Service {
+func NewPetService(logger log.Logger, repository pet.Repositorier) *Service {
 	return &Service{logger: logger, repository: repository}
 }
 
 func (service *Service) GetPetById(id int) (*Response, error) {
 	service.logger.Info("retrieve pet by id: %v", id)
-	pet, err := service.repository.FindById(id)
+	petF, err := service.repository.FindById(id)
 	if err != nil {
 		service.logger.Error("fails to retrieve pet by id: %v, err: %v", id, err.Error)
 		return nil, err
 	}
 
-	petP := &Response{}
-	petP.FromPet(pet)
-	return petP, err
+	response := &Response{}
+	response.FromPet(petF)
+	return response, err
 }
 
 func (service *Service) GetPetByName(name string) ([]Response, error) {
@@ -42,11 +43,10 @@ func (service *Service) GetPetByName(name string) ([]Response, error) {
 		return nil, err
 	}
 
-	petP := &Pet{}
-	return petP.ToPetResponses(pets), err
+	return FromPets(pets), nil
 }
 
-func (service *Service) Create(pet *Pet) (*Response, error) {
+func (service *Service) Create(pet *pet.Pet) (*Response, error) {
 	service.logger.Info("Create new pet: %v", pet.Name)
 	newPet, err := service.repository.Insert(pet)
 
@@ -55,11 +55,12 @@ func (service *Service) Create(pet *Pet) (*Response, error) {
 		return &Response{}, err
 	}
 
-	petP := &Pet{}
-	return petP.ToPetResponse(newPet), err
+	response := &Response{}
+	response.FromPet(newPet)
+	return response, nil
 }
 
-func (service *Service) Update(pet *Pet) (*Response, error) {
+func (service *Service) Update(pet *pet.Pet) (*Response, error) {
 	service.logger.Info("update vet: %v", pet)
 	updatedPet, err := service.repository.Update(pet)
 
@@ -68,6 +69,7 @@ func (service *Service) Update(pet *Pet) (*Response, error) {
 		return nil, err
 	}
 
-	petP := &Pet{}
-	return petP.ToPetResponse(updatedPet), err
+	response := &Response{}
+	response.FromPet(updatedPet)
+	return response, nil
 }

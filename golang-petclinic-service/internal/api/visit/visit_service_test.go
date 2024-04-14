@@ -1,6 +1,7 @@
 package visit
 
 import (
+	visit2 "github.com/rhtran/golang-petclinic-service/pkg/infra/repository/visit"
 	"github.com/rhtran/golang-petclinic-service/pkg/model"
 	"testing"
 
@@ -10,8 +11,8 @@ import (
 
 func Test_GetById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetById")
-	visitMock := MockRepositorier{}
-	visit := &Visit{
+	visitMock := visit2.MockRepositorier{}
+	visit := &visit2.Visit{
 		Base: model.Base{
 			ID: 1,
 		},

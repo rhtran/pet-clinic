@@ -57,18 +57,18 @@ Add vektra mockery to go mod
 go get github.com/vektra/mockery/v3
 ```
 
-
 **Creating mock function/interface**<br/>
-mockery --name=OwnerRepositorier  --inpackage<br/>
-mockery --name=OwnerServicer  --inpackage<br/>
-
-
-
-mockery --dir=internal/repositories
---name=ProductRepositoryInterface
---filename=product_repository_interface.go
---output=internal/mocks/repomocks  
---outpkg=repomocks
+```yaml
+with-expecter: true
+mockname: "Mock{{.InterfaceName}}"
+inpackage: true
+testonly: true
+case: underscore
+```
+Run this command to generate the mock files
+```shell
+mockery --all
+```
 
 
 Okta Authentication & Authorization

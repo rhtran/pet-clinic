@@ -1,6 +1,7 @@
 package pet
 
 import (
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
 	"github.com/rhtran/golang-petclinic-service/pkg/model"
 )
 
@@ -10,10 +11,10 @@ type Request struct {
 	TypeName string `json:"typeName" binding:"required"`
 }
 
-func (pr Request) ToPet(petRequest *Request) *Pet {
-	return &Pet{
+func (pr Request) ToPet(petRequest *Request) *pet.Pet {
+	return &pet.Pet{
 		Name: petRequest.Name,
-		Type: Type{
+		Type: pet.Type{
 			Base: model.Base{
 				ID: petRequest.TypeID,
 			},

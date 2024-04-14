@@ -29,20 +29,3 @@ type Type struct {
 	model.Base
 	Name string `json:"name"`
 }
-
-func (p *Pet) ToPetResponse(pet *Pet) *Response {
-	return &Response{
-		ID:        pet.ID,
-		Name:      pet.Name,
-		BirthDate: pet.BirthDate,
-		Type:      pet.Type.Name,
-	}
-}
-
-func (p *Pet) ToPetResponses(pets []Pet) []Response {
-	petResponses := make([]Response, len(pets))
-	for i, v := range pets {
-		petResponses[i] = *p.ToPetResponse(&v)
-	}
-	return petResponses
-}

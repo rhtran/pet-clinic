@@ -1,6 +1,7 @@
 package owner
 
 import (
+	owner2 "github.com/rhtran/golang-petclinic-service/infra/repository/owner"
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
 	"testing"
 
@@ -10,8 +11,8 @@ import (
 
 func Test_getById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_getById")
-	ownerMock := MockRepositorier{}
-	owner := &Owner{
+	ownerMock := owner2.MockRepositorier{}
+	owner := &owner2.Owner{
 		Base: model2.Base{
 			ID: 1,
 		},
@@ -34,10 +35,10 @@ func Test_getById(t *testing.T) {
 
 func Test_getByLastName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_getByLastName")
-	ownerMock := MockRepositorier{}
+	ownerMock := owner2.MockRepositorier{}
 
-	owners := make([]Owner, 1)
-	owner := &Owner{
+	owners := make([]owner2.Owner, 1)
+	owner := &owner2.Owner{
 		Base: model2.Base{
 			ID: 1,
 		},

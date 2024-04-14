@@ -2,6 +2,7 @@ package owner
 
 import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
+	"github.com/rhtran/golang-petclinic-service/infra/repository/owner"
 )
 
 type Servicer interface {
@@ -9,16 +10,16 @@ type Servicer interface {
 	getOwnerByLastName(lastName string) ([]Response, error)
 	getAllOwners() ([]Response, error)
 	getAllOwnersWithPets() ([]Response, error)
-	create(owner *Owner) (*Response, error)
-	update(owner *Owner) (*Response, error)
+	create(owner *owner.Owner) (*Response, error)
+	update(owner *owner.Owner) (*Response, error)
 }
 
 type Service struct {
 	logger     log.Logger
-	repository Repositorier
+	repository owner.Repositorier
 }
 
-func NewOwnerService(logger log.Logger, repository Repositorier) *Service {
+func NewOwnerService(logger log.Logger, repository owner.Repositorier) *Service {
 	return &Service{logger: logger, repository: repository}
 }
 
@@ -30,8 +31,9 @@ func (service *Service) getOwnerById(id int) (*Response, error) {
 		return nil, err
 	}
 
-	ownerP := &Owner{}
-	return ownerP.ToOwnerResponse(owner), err
+	response := &Response{}
+	response.FromOwner(owner)
+	return response, nil
 }
 
 func (service *Service) getOwnerByLastName(lastName string) ([]Response, error) {
@@ -42,8 +44,7 @@ func (service *Service) getOwnerByLastName(lastName string) ([]Response, error) 
 		return nil, err
 	}
 
-	ownerP := &Owner{}
-	return ownerP.ToOwnerResponses(owners), err
+	return FromOwners(owners), nil
 }
 
 func (service *Service) getAllOwners() ([]Response, error) {
@@ -54,8 +55,7 @@ func (service *Service) getAllOwners() ([]Response, error) {
 		return nil, err
 	}
 
-	ownerP := &Owner{}
-	return ownerP.ToOwnerResponses(owners), err
+	return FromOwners(owners), nil
 }
 
 func (service *Service) getAllOwnersWithPets() ([]Response, error) {
@@ -66,11 +66,10 @@ func (service *Service) getAllOwnersWithPets() ([]Response, error) {
 		return nil, err
 	}
 
-	ownerP := &Owner{}
-	return ownerP.ToOwnerResponses(owners), err
+	return FromOwners(owners), nil
 }
 
-func (service *Service) create(owner *Owner) (*Response, error) {
+func (service *Service) create(owner *owner.Owner) (*Response, error) {
 	service.logger.Info("Create new owner")
 	newOwner, err := service.repository.Insert(owner)
 
@@ -79,11 +78,12 @@ func (service *Service) create(owner *Owner) (*Response, error) {
 		return nil, err
 	}
 
-	ownerP := &Owner{}
-	return ownerP.ToOwnerResponse(newOwner), err
+	response := &Response{}
+	response.FromOwner(newOwner)
+	return response, nil
 }
 
-func (service *Service) update(owner *Owner) (*Response, error) {
+func (service *Service) update(owner *owner.Owner) (*Response, error) {
 	service.logger.Infof("update vet: %v", owner)
 	updatedOwner, err := service.repository.Update(owner)
 
@@ -92,6 +92,7 @@ func (service *Service) update(owner *Owner) (*Response, error) {
 		return nil, err
 	}
 
-	ownerP := &Owner{}
-	return ownerP.ToOwnerResponse(updatedOwner), err
+	response := &Response{}
+	response.FromOwner(updatedOwner)
+	return response, nil
 }

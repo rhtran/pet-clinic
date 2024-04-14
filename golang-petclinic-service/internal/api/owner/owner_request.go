@@ -1,6 +1,7 @@
 package owner
 
 import (
+	"github.com/rhtran/golang-petclinic-service/infra/repository/owner"
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
 )
 
@@ -14,8 +15,8 @@ type Request struct {
 	Telephone string `json:"telephone"`
 }
 
-func (or *Request) ToOwner(ownerRequest *Request) *Owner {
-	return &Owner{
+func (or *Request) ToOwner(ownerRequest *Request) *owner.Owner {
+	return &owner.Owner{
 		Base: model2.Base{
 			ID: ownerRequest.ID,
 		},

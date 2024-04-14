@@ -1,6 +1,9 @@
 package pet
 
-import "time"
+import (
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/pet"
+	"time"
+)
 
 type Response struct {
 	ID        int        `json:"id"`
@@ -9,9 +12,17 @@ type Response struct {
 	Type      string     `json:"type"`
 }
 
-func (pr *Response) FromPet(pet *Pet) {
+func (pr *Response) FromPet(pet *pet.Pet) {
 	pr.ID = pet.ID
 	pr.Name = pet.Name
 	pr.BirthDate = pet.BirthDate
 	pr.Type = pet.Type.Name
+}
+
+func FromPets(pets []pet.Pet) []Response {
+	petResponses := make([]Response, len(pets))
+	for i, v := range pets {
+		petResponses[i].FromPet(&v)
+	}
+	return petResponses
 }
