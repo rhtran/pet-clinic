@@ -11,7 +11,7 @@ import (
 
 func Test_GetById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetById")
-	visitMock := repository.MockRepositorier{}
+	visitMock := repository.MockVisitRepositorier{}
 	visit := &repository.Visit{
 		Base: model.Base{
 			ID: 1,

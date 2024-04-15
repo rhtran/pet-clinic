@@ -36,7 +36,7 @@ func Test_GetById(t *testing.T) {
 
 func Test_GetByLastName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetByLastName")
-	vetMock := vetrepo.MockVetRepositorier{}
+	vetMock := repository.MockVetRepositorier{}
 
 	vets := make([]repository.Vet, 1)
 	vet := &repository.Vet{

@@ -1,7 +1,6 @@
 with-expecter: true
 mockname: "Mock{{.InterfaceName}}"
 inpackage: true
-testonly: true
 case: underscore
 
 

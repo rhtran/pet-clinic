@@ -11,7 +11,7 @@ import (
 func Test_getById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_getById")
 	ownerMock := repository.MockOwnerRepositorier{}
-	owner := &ownerrepo.Owner{
+	owner := &repository.Owner{
 		Base: model.Base{
 			ID: 1,
 		},
@@ -34,10 +34,10 @@ func Test_getById(t *testing.T) {
 
 func Test_getByLastName(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_getByLastName")
-	ownerMock := repository.MockRepositorier{}
+	ownerMock := repository.MockOwnerRepositorier{}
 
-	owners := make([]ownerrepo.Owner, 1)
-	owner := &ownerrepo.Owner{
+	owners := make([]repository.Owner, 1)
+	owner := &repository.Owner{
 		Base: model.Base{
 			ID: 1,
 		},
