@@ -3,7 +3,7 @@ package info
 import (
 	"context"
 	"encoding/json"
-	"github.com/rhtran/golang-petclinic-service/internal/api/test"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/test"
 	"net"
 	"net/http"
 	"testing"

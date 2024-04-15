@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/rhtran/golang-petclinic-service/internal/api/test"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/test"
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
 	"testing"
 
@@ -20,7 +20,7 @@ type VetRepoTestSuite struct {
 
 // This will run before the tests in the suite are run
 func (suite *VetRepoTestSuite) SetupSuite() {
-	suite.postgresql = test.PgStart(suite.T(), "../test/migrations")
+	suite.postgresql = test.PgStart(suite.T(), "test/migrations")
 	suite.vetRepository = getVetRepository(suite.T())
 }
 

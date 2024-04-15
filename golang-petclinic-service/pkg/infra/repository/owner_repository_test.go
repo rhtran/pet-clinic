@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/rhtran/golang-petclinic-service/internal/api/test"
-	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/test"
+	"github.com/rhtran/golang-petclinic-service/pkg/model"
 	"testing"
 
 	embeddedpostgres "github.com/fergusstrange/embedded-postgres"
@@ -20,7 +20,7 @@ type OwnerRepoTestSuite struct {
 
 // This will run before the tests in the suite are run
 func (suite *OwnerRepoTestSuite) SetupSuite() {
-	suite.postgresql = test.PgStart(suite.T(), "../test/migrations")
+	suite.postgresql = test.PgStart(suite.T(), "test/migrations")
 	suite.ownerRepository = getOwnerRepository(suite.T())
 }
 
@@ -53,19 +53,19 @@ func (suite *OwnerRepoTestSuite) Test_FindById() {
 		expected Owner
 	}{
 		{input: 2, expected: Owner{
-			Base: model2.Base{
+			Base: model.Base{
 				ID: 2,
 			},
-			Person: model2.Person{
+			Person: model.Person{
 				FirstName: "Betty",
 				LastName:  "Davis",
 			},
 		}},
 		{input: 5, expected: Owner{
-			Base: model2.Base{
+			Base: model.Base{
 				ID: 2,
 			},
-			Person: model2.Person{
+			Person: model.Person{
 				FirstName: "Peter",
 				LastName:  "McTavish",
 			},
@@ -85,13 +85,13 @@ func (suite *OwnerRepoTestSuite) Test_FindByLastName() {
 		expected Owner
 	}{
 		{"Coleman", Owner{
-			Person: model2.Person{
+			Person: model.Person{
 				FirstName: "Jean",
 				LastName:  "Coleman",
 			},
 		}},
 		{"Schroeder", Owner{
-			Person: model2.Person{
+			Person: model.Person{
 				FirstName: "David",
 				LastName:  "Schroeder",
 			},

@@ -2,7 +2,7 @@ package owner
 
 import (
 	"encoding/json"
-	"github.com/rhtran/golang-petclinic-service/internal/api/test"
+	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/test"
 	"net/http"
 	"testing"
 
