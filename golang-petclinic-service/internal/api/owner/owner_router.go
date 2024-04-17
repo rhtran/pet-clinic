@@ -122,7 +122,7 @@ func (ownerRouter *Router) updateOwner(c *gin.Context) {
 		return
 	}
 
-	ownerRequest.ID = id
+	ownerRequest.ID = uint(id)
 	updatedOwner, err := ownerRouter.service.update(ToOwner(&ownerRequest))
 	c.JSON(http.StatusCreated, updatedOwner)
 }

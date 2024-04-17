@@ -6,7 +6,7 @@ import (
 )
 
 type Response struct {
-	ID        int            `json:"id"`
+	ID        uint           `json:"id"`
 	FirstName string         `json:"firstName"`
 	LastName  string         `json:"lastName"`
 	Username  string         `json:"username"`

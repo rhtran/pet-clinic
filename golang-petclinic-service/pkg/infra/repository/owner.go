@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/rhtran/golang-petclinic-service/pkg/model"
+	"gorm.io/gorm"
 )
 
 /*
@@ -9,12 +10,12 @@ Owner has many Pets, OwnerID is the foreign key
 Has Many configuration
 */
 type Owner struct {
-	model.Base
+	gorm.Model
 	model.Person
-	Username  string `json:"username"`
-	Password  string `json:"-"`
-	Address   string `json:"address"`
-	City      string `json:"city"`
-	Telephone string `json:"telephone"`
-	Pets      []Pet  `json:"pets"`
+	Username  string
+	Password  string
+	Address   string
+	City      string
+	Telephone string
+	Pets      []Pet
 }

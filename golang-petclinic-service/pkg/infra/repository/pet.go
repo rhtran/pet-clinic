@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/rhtran/golang-petclinic-service/pkg/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -17,15 +17,15 @@ Notes:
 */
 // Pet type belongs to Type, TypeID is the foreign key
 type Pet struct {
-	model.Base
-	Name      string     `json:"name"`
-	BirthDate *time.Time `json:"birthDate"`
-	TypeID    int        `json:"typeId"`
-	OwnerID   int        `json:"ownerId"`
-	Type      Type       `gorm:"foreignKey:TypeID"`
+	gorm.Model
+	Name      string     `gorm:"name"`
+	BirthDate *time.Time `gorm:"birth_date"`
+	TypeID    int
+	OwnerID   int
+	Type      Type `gorm:"foreignKey:TypeID"`
 }
 
 type Type struct {
-	model.Base
-	Name string `json:"name"`
+	gorm.Model
+	Name string
 }

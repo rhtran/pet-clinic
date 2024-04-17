@@ -105,7 +105,7 @@ func (vetRouter *VetRouter) addNewVet(c *gin.Context) {
 
 func (vetRouter *VetRouter) updateVet(c *gin.Context) {
 	var vetRequest Request
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 	err := c.ShouldBindJSON(&vetRequest)
 
 	if err != nil {
@@ -114,7 +114,7 @@ func (vetRouter *VetRouter) updateVet(c *gin.Context) {
 		return
 	}
 
-	vetRequest.ID = id
+	vetRequest.ID = uint(id)
 	newVet, err := vetRouter.service.Update(vetRequest.ToVet(&vetRequest))
 	c.JSON(http.StatusCreated, newVet)
 }
