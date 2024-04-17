@@ -4,13 +4,14 @@ import (
 	validation "github.com/go-ozzo/ozzo-validation/v3"
 	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
+	"gorm.io/gorm"
 )
 
 type Request struct {
-	ID          int                    `json:"-"`
-	FirstName   string                 `json:"firstName" binding:"required"`
-	LastName    string                 `json:"lastName" binding:"required"`
-	Specialties []repository.Specialty `json:"specialties" binding:"required"`
+	ID          uint        `json:"-"`
+	FirstName   string      `json:"firstName" binding:"required"`
+	LastName    string      `json:"lastName" binding:"required"`
+	Specialties []Specialty `json:"specialties" binding:"required"`
 }
 
 func (vr Request) Validate() error {
@@ -21,24 +22,15 @@ func (vr Request) Validate() error {
 	)
 }
 
-func (vr Request) ToVet(vetRequest *Request) *repository.Vet {
-	//specialties := make([]Specialty, len(vetRequest.Specialties))
-
-	//for i, v := range vetRequest.Specialties {
-	//	specialties[i] = Specialty{
-	//		Base: model.Base{ID: vetRequest.Specialties[i].ID},
-	//		Name: vetRequest.Specialties[i].Name,
-	//	}
-	//}
-
+func ToVet(vetRequest *Request) *repository.Vet {
 	return &repository.Vet{
-		Base: model2.Base{
+		Model: gorm.Model{
 			ID: vetRequest.ID,
 		},
 		Person: model2.Person{
 			FirstName: vetRequest.FirstName,
 			LastName:  vetRequest.LastName,
 		},
-		Specialties: vetRequest.Specialties,
+		Specialties: *ToSpecialties(vetRequest.Specialties),
 	}
 }

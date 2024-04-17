@@ -19,7 +19,7 @@ func (vr *Response) FromVet(vet *repository.Vet) {
 	vr.ID = vet.ID
 	vr.FirstName = vet.FirstName
 	vr.LastName = vet.LastName
-	vr.Specialties = FromSpecialties(vet.Specialties)
+	vr.Specialties = *FromSpecialties(vet.Specialties)
 }
 
 func FromVets(vets []repository.Vet) []Response {
@@ -28,23 +28,4 @@ func FromVets(vets []repository.Vet) []Response {
 		vetResponses[i].FromVet(&v)
 	}
 	return vetResponses
-}
-
-type Specialty struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name"`
-}
-
-func (s *Specialty) FromSpecialty(specialty *repository.Specialty) {
-	s.ID = specialty.ID
-	s.Name = specialty.Name
-}
-
-func FromSpecialties(specialties []repository.Specialty) []Specialty {
-	specialtyResponses := make([]Specialty, len(specialties))
-	for i, s := range specialties {
-		specialtyResponses[i].ID = s.ID
-		specialtyResponses[i].Name = s.Name
-	}
-	return specialtyResponses
 }

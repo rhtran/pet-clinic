@@ -9,7 +9,7 @@ import (
 type Vet struct {
 	gorm.Model
 	model.Person
-	Specialties []Specialty `gorm:"many2many:vet_specialties;",json:"specialties"`
+	Specialties []Specialty `gorm:"many2many:vet_specialties;"`
 }
 
 type Specialty struct {

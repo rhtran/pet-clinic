@@ -99,7 +99,7 @@ func (vetRouter *VetRouter) addNewVet(c *gin.Context) {
 		return
 	}
 
-	newVet, err := vetRouter.service.Create(vetRequest.ToVet(&vetRequest))
+	newVet, err := vetRouter.service.Create(ToVet(&vetRequest))
 	c.JSON(http.StatusCreated, newVet)
 }
 
@@ -115,6 +115,6 @@ func (vetRouter *VetRouter) updateVet(c *gin.Context) {
 	}
 
 	vetRequest.ID = uint(id)
-	newVet, err := vetRouter.service.Update(vetRequest.ToVet(&vetRequest))
+	newVet, err := vetRouter.service.Update(ToVet(&vetRequest))
 	c.JSON(http.StatusCreated, newVet)
 }

@@ -82,7 +82,7 @@ func (petRouter *PetRouter) addNewPet(c *gin.Context) {
 	}
 
 	petRouter.logger.Infof("Add a new pet: %v", request.Name)
-	petResponse, err := petRouter.service.Create(request.ToPet(&request))
+	petResponse, err := petRouter.service.Create(ToPet(&request))
 	c.JSON(http.StatusCreated, petResponse)
 }
 
@@ -96,6 +96,6 @@ func (petRouter *PetRouter) updatePet(c *gin.Context) {
 	}
 
 	petRouter.logger.Infof("Add a new pet: %v", request.Name)
-	petResponse, err := petRouter.service.Update(request.ToPet(&request))
+	petResponse, err := petRouter.service.Update(ToPet(&request))
 	c.JSON(http.StatusCreated, petResponse)
 }

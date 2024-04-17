@@ -3,10 +3,11 @@ package owner
 import (
 	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
 	"github.com/rhtran/golang-petclinic-service/pkg/model"
+	"gorm.io/gorm"
 )
 
 type Request struct {
-	ID        int    `json:"id"`
+	ID        uint   `json:"id"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Username  string `json:"username"`
@@ -17,7 +18,7 @@ type Request struct {
 
 func ToOwner(ownerRequest *Request) *repository.Owner {
 	return &repository.Owner{
-		Base: model.Base{
+		Model: gorm.Model{
 			ID: ownerRequest.ID,
 		},
 		Person: model.Person{
