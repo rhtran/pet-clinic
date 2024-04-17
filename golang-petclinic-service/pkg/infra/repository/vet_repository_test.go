@@ -3,6 +3,7 @@ package repository
 import (
 	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/test"
 	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
+	"gorm.io/gorm"
 	"testing"
 
 	embeddedpostgres "github.com/fergusstrange/embedded-postgres"
@@ -53,7 +54,7 @@ func (suite *VetRepoTestSuite) Test_FindById() {
 		expected Vet
 	}{
 		{1, Vet{
-			Base: model2.Base{
+			Model: gorm.Model{
 				ID: 1,
 			},
 			Person: model2.Person{
@@ -62,7 +63,7 @@ func (suite *VetRepoTestSuite) Test_FindById() {
 			},
 		}},
 		{2, Vet{
-			Base: model2.Base{
+			Model: gorm.Model{
 				ID: 2,
 			},
 			Person: model2.Person{

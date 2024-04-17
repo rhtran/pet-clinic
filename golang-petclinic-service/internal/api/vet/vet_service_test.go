@@ -14,9 +14,6 @@ func Test_GetById(t *testing.T) {
 	logger := log.New().With(nil, "function", "Test_GetById")
 	vetMock := repository.MockVetRepositorier{}
 	vet := &repository.Vet{
-		Base: model.Base{
-			ID: 1,
-		},
 		Person: model.Person{
 			FirstName: "Nat",
 			LastName:  "Cole",
@@ -40,9 +37,6 @@ func Test_GetByLastName(t *testing.T) {
 
 	vets := make([]repository.Vet, 1)
 	vet := &repository.Vet{
-		Base: model.Base{
-			ID: 1,
-		},
 		Person: model.Person{
 			FirstName: "Leo",
 			LastName:  "DiCaprio",

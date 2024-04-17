@@ -26,7 +26,7 @@ func (petRouter *PetRouter) PetRegister(router *gin.RouterGroup) {
 	router.GET(":id", petRouter.petById)
 	router.GET("", petRouter.petByQueryParam)
 	router.POST("", petRouter.addNewPet)
-	router.PUT("", petRouter.updatePet)
+	router.PUT(":id", petRouter.updatePet)
 }
 
 func (petRouter *PetRouter) petById(c *gin.Context) {
@@ -51,7 +51,6 @@ func (petRouter *PetRouter) petById(c *gin.Context) {
 
 func (petRouter *PetRouter) petByQueryParam(c *gin.Context) {
 	var nameParam api.NameParam
-
 	err := c.BindQuery(&nameParam)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, resterr.BadRequestWithDetails(err))
@@ -88,7 +87,13 @@ func (petRouter *PetRouter) addNewPet(c *gin.Context) {
 
 func (petRouter *PetRouter) updatePet(c *gin.Context) {
 	var request Request
-	err := c.ShouldBind(&request)
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, resterr.BadRequestWithDetails(err))
+		return
+	}
+
+	err = c.ShouldBind(&request)
 	if err != nil {
 		petRouter.logger.Errorf("Unable to Unmarshal JSON: %s", err.Error())
 		c.JSON(http.StatusBadRequest, resterr.BadRequestWithDetails(err))
@@ -96,6 +101,8 @@ func (petRouter *PetRouter) updatePet(c *gin.Context) {
 	}
 
 	petRouter.logger.Infof("Add a new pet: %v", request.Name)
-	petResponse, err := petRouter.service.Update(ToPet(&request))
+	petEntity := ToPet(&request)
+	petEntity.ID = uint(id)
+	petResponse, err := petRouter.service.Update(petEntity)
 	c.JSON(http.StatusCreated, petResponse)
 }

@@ -10,6 +10,10 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+type Database interface {
+	PgConnect() *gorm.DB
+}
+
 type Postgres struct {
 }
 

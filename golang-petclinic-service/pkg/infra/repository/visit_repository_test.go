@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository/test"
-	"github.com/rhtran/golang-petclinic-service/pkg/model"
+	"gorm.io/gorm"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -54,14 +54,14 @@ func (suite *VisitRepoTestSuite) Test_FindById() {
 		expected Visit
 	}{
 		{input: 2, expected: Visit{
-			Base: model.Base{
+			Model: gorm.Model{
 				ID: 2,
 			},
 			PetID:       8,
 			Description: "rabies shot",
 		}},
 		{input: 1, expected: Visit{
-			Base: model.Base{
+			Model: gorm.Model{
 				ID: 1,
 			},
 			PetID:       7,

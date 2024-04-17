@@ -3,12 +3,10 @@ package vet
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v3"
 	"github.com/rhtran/golang-petclinic-service/pkg/infra/repository"
-	model2 "github.com/rhtran/golang-petclinic-service/pkg/model"
-	"gorm.io/gorm"
+	"github.com/rhtran/golang-petclinic-service/pkg/model"
 )
 
 type Request struct {
-	ID          uint        `json:"-"`
 	FirstName   string      `json:"firstName" binding:"required"`
 	LastName    string      `json:"lastName" binding:"required"`
 	Specialties []Specialty `json:"specialties" binding:"required"`
@@ -24,10 +22,7 @@ func (vr Request) Validate() error {
 
 func ToVet(vetRequest *Request) *repository.Vet {
 	return &repository.Vet{
-		Model: gorm.Model{
-			ID: vetRequest.ID,
-		},
-		Person: model2.Person{
+		Person: model.Person{
 			FirstName: vetRequest.FirstName,
 			LastName:  vetRequest.LastName,
 		},
