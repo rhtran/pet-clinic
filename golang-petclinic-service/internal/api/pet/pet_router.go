@@ -36,7 +36,7 @@ func (petRouter *PetRouter) petById(c *gin.Context) {
 		return
 	}
 
-	response, err := petRouter.service.GetPetById(id)
+	response, err := petRouter.service.getPetById(id)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			c.JSON(http.StatusNotFound, resterr.NotFound(err.Error()))
@@ -61,7 +61,7 @@ func (petRouter *PetRouter) petByQueryParam(c *gin.Context) {
 }
 
 func (petRouter *PetRouter) petByName(c *gin.Context, param api.NameParam) {
-	response, err := petRouter.service.GetPetByName(param.Name)
+	response, err := petRouter.service.getPetByName(param.Name)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, resterr.InternalServerError(""))
@@ -81,7 +81,7 @@ func (petRouter *PetRouter) addNewPet(c *gin.Context) {
 	}
 
 	petRouter.logger.Infof("Add a new pet: %v", request.Name)
-	petResponse, err := petRouter.service.Create(ToPet(&request))
+	petResponse, err := petRouter.service.create(ToPet(&request))
 	c.JSON(http.StatusCreated, petResponse)
 }
 
@@ -103,6 +103,6 @@ func (petRouter *PetRouter) updatePet(c *gin.Context) {
 	petRouter.logger.Infof("Add a new pet: %v", request.Name)
 	petEntity := ToPet(&request)
 	petEntity.ID = uint(id)
-	petResponse, err := petRouter.service.Update(petEntity)
+	petResponse, err := petRouter.service.update(petEntity)
 	c.JSON(http.StatusCreated, petResponse)
 }

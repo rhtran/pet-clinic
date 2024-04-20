@@ -17,7 +17,7 @@ func ToPet(petRequest *Request) *repository.Pet {
 	birthday, _ := time.Parse(time.DateOnly, petRequest.Birthday)
 	return &repository.Pet{
 		Name:      petRequest.Name,
-		BirthDate: &birthday,
+		BirthDate: birthday,
 		Type: repository.Type{
 			Model: gorm.Model{
 				ID: petRequest.TypeID,

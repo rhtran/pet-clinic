@@ -6,10 +6,10 @@ import (
 )
 
 type Servicer interface {
-	GetPetById(id int) (*Response, error)
-	GetPetByName(name string) ([]Response, error)
-	Create(pet *repository.Pet) (*Response, error)
-	Update(pet *repository.Pet) (*Response, error)
+	getPetById(id int) (*Response, error)
+	getPetByName(name string) ([]Response, error)
+	create(pet *repository.Pet) (*Response, error)
+	update(pet *repository.Pet) (*Response, error)
 }
 
 type Service struct {
@@ -21,7 +21,7 @@ func NewPetService(logger log.Logger, repository repository.PetRepositorier) *Se
 	return &Service{logger: logger, repository: repository}
 }
 
-func (service *Service) GetPetById(id int) (*Response, error) {
+func (service *Service) getPetById(id int) (*Response, error) {
 	service.logger.Info("retrieve pet by id: %v", id)
 	petF, err := service.repository.FindById(id)
 	if err != nil {
@@ -34,7 +34,7 @@ func (service *Service) GetPetById(id int) (*Response, error) {
 	return response, nil
 }
 
-func (service *Service) GetPetByName(name string) ([]Response, error) {
+func (service *Service) getPetByName(name string) ([]Response, error) {
 	service.logger.Info("retrieve pet by name: %v", name)
 
 	pets, err := service.repository.FindByName(name)
@@ -46,7 +46,7 @@ func (service *Service) GetPetByName(name string) ([]Response, error) {
 	return FromPets(pets), nil
 }
 
-func (service *Service) Create(pet *repository.Pet) (*Response, error) {
+func (service *Service) create(pet *repository.Pet) (*Response, error) {
 	service.logger.Info("Create new pet: %v", pet.Name)
 	newPet, err := service.repository.Insert(pet)
 
@@ -60,7 +60,7 @@ func (service *Service) Create(pet *repository.Pet) (*Response, error) {
 	return response, nil
 }
 
-func (service *Service) Update(pet *repository.Pet) (*Response, error) {
+func (service *Service) update(pet *repository.Pet) (*Response, error) {
 	service.logger.Info("update vet: %v", pet)
 	updatedPet, err := service.repository.Update(pet)
 

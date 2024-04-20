@@ -4,6 +4,7 @@ import (
 	"github.com/qiangxue/go-restful-api/pkg/log"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"time"
 )
 
 type OwnerRepositorier interface {
@@ -44,7 +45,7 @@ func (repository *OwnerRepository) FindById(id int) (*Owner, error) {
 		repository.logger.Errorf("fails to find owner by id: %v, err: %v", id, err.Error)
 		return nil, err
 	}
-	return &owner, err
+	return &owner, nil
 }
 
 // FindByLastName
@@ -63,7 +64,7 @@ func (repository *OwnerRepository) FindByLastName(lastName string) ([]Owner, err
 		repository.logger.Errorf("fails to find owners by last name: %v, err: %v", lastName, err.Error)
 		return nil, err
 	}
-	return owners, err
+	return owners, nil
 }
 
 /*
@@ -81,7 +82,7 @@ func (repository *OwnerRepository) FindAll() ([]Owner, error) {
 		return nil, err
 	}
 
-	return owners, err
+	return owners, nil
 }
 
 /*
@@ -104,22 +105,26 @@ func (repository *OwnerRepository) FindAllWithPets() ([]Owner, error) {
 		return nil, err
 	}
 
-	return owners, err
+	return owners, nil
 }
 
 func (repository *OwnerRepository) Insert(owner *Owner) (*Owner, error) {
 	repository.logger.Infof("insert a new owner: %v", owner)
+	now := time.Now()
+	owner.UpdatedAt = now
+	owner.CreatedAt = now
 
 	err := repository.pg.Create(&owner).Error
 	if err != nil {
 		repository.logger.Errorf("fails to insert new owner, err: %v", err.Error)
 		return nil, err
 	}
-	return owner, err
+	return owner, nil
 }
 
 func (repository *OwnerRepository) Update(owner *Owner) (*Owner, error) {
 	repository.logger.Infof("update owner id: %v", owner.ID)
+	owner.UpdatedAt = time.Now()
 
 	// Omit the column name from update...
 	err := repository.pg.Omit("created_at").Save(&owner).Error
@@ -128,5 +133,5 @@ func (repository *OwnerRepository) Update(owner *Owner) (*Owner, error) {
 		return nil, err
 	}
 
-	return owner, err
+	return owner, nil
 }

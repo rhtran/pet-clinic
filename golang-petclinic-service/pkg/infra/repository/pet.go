@@ -18,8 +18,8 @@ Notes:
 // Pet type belongs to Type, TypeID is the foreign key
 type Pet struct {
 	gorm.Model
-	Name      string     `gorm:"name"`
-	BirthDate *time.Time `gorm:"birth_date"`
+	Name      string    `gorm:"name"`
+	BirthDate time.Time `gorm:"birth_date"`
 	TypeID    int
 	OwnerID   int
 	Type      Type `gorm:"foreignKey:TypeID"`

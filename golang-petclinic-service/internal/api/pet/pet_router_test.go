@@ -20,7 +20,7 @@ type petServiceMock struct {
 	mock.Mock
 }
 
-func (petM *petServiceMock) GetPetById(id int) (*Response, error) {
+func (petM *petServiceMock) getPetById(id int) (*Response, error) {
 	args := petM.Called(id)
 	intf := args.Get(0)
 	val := intf.(Response)
@@ -29,7 +29,7 @@ func (petM *petServiceMock) GetPetById(id int) (*Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (petM *petServiceMock) GetPetByName(name string) ([]Response, error) {
+func (petM *petServiceMock) getPetByName(name string) ([]Response, error) {
 	args := petM.Called(name)
 	intf := args.Get(0)
 	val := intf.([]Response)
@@ -38,7 +38,7 @@ func (petM *petServiceMock) GetPetByName(name string) ([]Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (petM *petServiceMock) Create(pet *repository.Pet) (*Response, error) {
+func (petM *petServiceMock) create(pet *repository.Pet) (*Response, error) {
 	args := petM.Called(pet)
 	intf := args.Get(0)
 	val := intf.(*Response)
@@ -47,7 +47,7 @@ func (petM *petServiceMock) Create(pet *repository.Pet) (*Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (petM *petServiceMock) Update(pet *repository.Pet) (*Response, error) {
+func (petM *petServiceMock) update(pet *repository.Pet) (*Response, error) {
 	args := petM.Called(pet)
 	intf := args.Get(0)
 	val := intf.(*Response)
