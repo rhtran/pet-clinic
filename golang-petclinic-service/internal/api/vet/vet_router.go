@@ -42,7 +42,7 @@ func (vetRouter *VetRouter) vetById(c *gin.Context) {
 		return
 	}
 
-	response, err := vetRouter.service.GetVetById(id)
+	response, err := vetRouter.service.getVetById(id)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			c.JSON(http.StatusNotFound, resterr.NotFound(err.Error()))
@@ -64,7 +64,7 @@ func (vetRouter *VetRouter) vetByParam(c *gin.Context) {
 }
 
 func (vetRouter *VetRouter) vetByLastName(c *gin.Context, lastName string) {
-	response, err := vetRouter.service.GetVetByLastName(lastName)
+	response, err := vetRouter.service.getVetByLastName(lastName)
 	if err != nil {
 		return
 	}
@@ -73,7 +73,7 @@ func (vetRouter *VetRouter) vetByLastName(c *gin.Context, lastName string) {
 }
 
 func (vetRouter *VetRouter) AllVets(c *gin.Context) {
-	response, err := vetRouter.service.GetAllVets()
+	response, err := vetRouter.service.getAllVets()
 	if err != nil {
 		return
 	}
@@ -82,7 +82,7 @@ func (vetRouter *VetRouter) AllVets(c *gin.Context) {
 }
 
 func (vetRouter *VetRouter) AllVetsWithSpecialties(c *gin.Context) {
-	response, err := vetRouter.service.GetAllVetsWithSpecialties()
+	response, err := vetRouter.service.getAllVetsWithSpecialties()
 	if err != nil {
 		return
 	}
@@ -99,7 +99,7 @@ func (vetRouter *VetRouter) addNewVet(c *gin.Context) {
 		return
 	}
 
-	newVet, err := vetRouter.service.Create(ToVet(&vetRequest))
+	newVet, err := vetRouter.service.create(ToVet(&vetRequest))
 	c.JSON(http.StatusCreated, newVet)
 }
 
@@ -116,6 +116,6 @@ func (vetRouter *VetRouter) updateVet(c *gin.Context) {
 
 	vetEntity := ToVet(&vetRequest)
 	vetEntity.ID = uint(id)
-	newVet, err := vetRouter.service.Update(vetEntity)
+	newVet, err := vetRouter.service.update(vetEntity)
 	c.JSON(http.StatusCreated, newVet)
 }

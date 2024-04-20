@@ -6,12 +6,12 @@ import (
 )
 
 type Servicer interface {
-	GetVetById(id int) (*Response, error)
-	GetVetByLastName(lastName string) ([]Response, error)
-	GetAllVets() ([]Response, error)
-	GetAllVetsWithSpecialties() ([]Response, error)
-	Create(vet *repository.Vet) (*Response, error)
-	Update(vet *repository.Vet) (*Response, error)
+	getVetById(id int) (*Response, error)
+	getVetByLastName(lastName string) ([]Response, error)
+	getAllVets() ([]Response, error)
+	getAllVetsWithSpecialties() ([]Response, error)
+	create(vet *repository.Vet) (*Response, error)
+	update(vet *repository.Vet) (*Response, error)
 }
 
 type Service struct {
@@ -23,7 +23,7 @@ func NewVetService(logger log.Logger, repository repository.VetRepositorier) *Se
 	return &Service{logger: logger, repository: repository}
 }
 
-func (service *Service) GetVetById(id int) (*Response, error) {
+func (service *Service) getVetById(id int) (*Response, error) {
 	getvet, err := service.repository.FindById(id)
 	if err != nil {
 		service.logger.Errorf("fails to retrieve vet by id: %d", id)
@@ -35,7 +35,7 @@ func (service *Service) GetVetById(id int) (*Response, error) {
 	return response, nil
 }
 
-func (service *Service) GetVetByLastName(lastName string) ([]Response, error) {
+func (service *Service) getVetByLastName(lastName string) ([]Response, error) {
 	vets, err := service.repository.FindByLastName(lastName)
 	if err != nil {
 		service.logger.Errorf("fail to retrieve the vets by last name: %v, errors: %v", lastName, err.Error())
@@ -56,7 +56,7 @@ func (service *Service) GetAllVets() ([]Response, error) {
 	return FromVets(vets), nil
 }
 
-func (service *Service) GetAllVetsWithSpecialties() ([]Response, error) {
+func (service *Service) getAllVetsWithSpecialties() ([]Response, error) {
 	vets, err := service.repository.FindAllPreload()
 
 	if err != nil {
@@ -67,7 +67,7 @@ func (service *Service) GetAllVetsWithSpecialties() ([]Response, error) {
 	return FromVets(vets), nil
 }
 
-func (service *Service) Create(vet *repository.Vet) (*Response, error) {
+func (service *Service) create(vet *repository.Vet) (*Response, error) {
 	service.logger.Infof("Create new vet: %v", vet)
 	newVet, err := service.repository.Insert(vet)
 
@@ -81,7 +81,7 @@ func (service *Service) Create(vet *repository.Vet) (*Response, error) {
 	return response, nil
 }
 
-func (service *Service) Update(vet *repository.Vet) (*Response, error) {
+func (service *Service) update(vet *repository.Vet) (*Response, error) {
 	service.logger.Infof("update vet: %v", vet)
 	updatedVet, err := service.repository.Update(vet)
 

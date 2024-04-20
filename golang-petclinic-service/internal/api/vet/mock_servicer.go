@@ -21,7 +21,7 @@ func (_m *MockServicer) EXPECT() *MockServicer_Expecter {
 }
 
 // Create provides a mock function with given fields: vet
-func (_m *MockServicer) Create(vet *repository.Vet) (*Response, error) {
+func (_m *MockServicer) create(vet *repository.Vet) (*Response, error) {
 	ret := _m.Called(vet)
 
 	if len(ret) == 0 {
@@ -57,7 +57,7 @@ type MockServicer_Create_Call struct {
 
 // Create is a helper method to define mock.On call
 //   - vet *repository.Vet
-func (_e *MockServicer_Expecter) Create(vet interface{}) *MockServicer_Create_Call {
+func (_e *MockServicer_Expecter) create(vet interface{}) *MockServicer_Create_Call {
 	return &MockServicer_Create_Call{Call: _e.mock.On("Create", vet)}
 }
 
@@ -79,7 +79,7 @@ func (_c *MockServicer_Create_Call) RunAndReturn(run func(*repository.Vet) (*Res
 }
 
 // GetAllVets provides a mock function with given fields:
-func (_m *MockServicer) GetAllVets() ([]Response, error) {
+func (_m *MockServicer) getAllVets() ([]Response, error) {
 	ret := _m.Called()
 
 	if len(ret) == 0 {
@@ -114,7 +114,7 @@ type MockServicer_GetAllVets_Call struct {
 }
 
 // GetAllVets is a helper method to define mock.On call
-func (_e *MockServicer_Expecter) GetAllVets() *MockServicer_GetAllVets_Call {
+func (_e *MockServicer_Expecter) getAllVets() *MockServicer_GetAllVets_Call {
 	return &MockServicer_GetAllVets_Call{Call: _e.mock.On("GetAllVets")}
 }
 
@@ -136,7 +136,7 @@ func (_c *MockServicer_GetAllVets_Call) RunAndReturn(run func() ([]Response, err
 }
 
 // GetAllVetsWithSpecialties provides a mock function with given fields:
-func (_m *MockServicer) GetAllVetsWithSpecialties() ([]Response, error) {
+func (_m *MockServicer) getAllVetsWithSpecialties() ([]Response, error) {
 	ret := _m.Called()
 
 	if len(ret) == 0 {
@@ -171,7 +171,7 @@ type MockServicer_GetAllVetsWithSpecialties_Call struct {
 }
 
 // GetAllVetsWithSpecialties is a helper method to define mock.On call
-func (_e *MockServicer_Expecter) GetAllVetsWithSpecialties() *MockServicer_GetAllVetsWithSpecialties_Call {
+func (_e *MockServicer_Expecter) getAllVetsWithSpecialties() *MockServicer_GetAllVetsWithSpecialties_Call {
 	return &MockServicer_GetAllVetsWithSpecialties_Call{Call: _e.mock.On("GetAllVetsWithSpecialties")}
 }
 
@@ -193,7 +193,7 @@ func (_c *MockServicer_GetAllVetsWithSpecialties_Call) RunAndReturn(run func() (
 }
 
 // GetVetById provides a mock function with given fields: id
-func (_m *MockServicer) GetVetById(id int) (*Response, error) {
+func (_m *MockServicer) getVetById(id int) (*Response, error) {
 	ret := _m.Called(id)
 
 	if len(ret) == 0 {
@@ -229,7 +229,7 @@ type MockServicer_GetVetById_Call struct {
 
 // GetVetById is a helper method to define mock.On call
 //   - id int
-func (_e *MockServicer_Expecter) GetVetById(id interface{}) *MockServicer_GetVetById_Call {
+func (_e *MockServicer_Expecter) getVetById(id interface{}) *MockServicer_GetVetById_Call {
 	return &MockServicer_GetVetById_Call{Call: _e.mock.On("GetVetById", id)}
 }
 
@@ -251,7 +251,7 @@ func (_c *MockServicer_GetVetById_Call) RunAndReturn(run func(int) (*Response, e
 }
 
 // GetVetByLastName provides a mock function with given fields: lastName
-func (_m *MockServicer) GetVetByLastName(lastName string) ([]Response, error) {
+func (_m *MockServicer) getVetByLastName(lastName string) ([]Response, error) {
 	ret := _m.Called(lastName)
 
 	if len(ret) == 0 {
@@ -287,7 +287,7 @@ type MockServicer_GetVetByLastName_Call struct {
 
 // GetVetByLastName is a helper method to define mock.On call
 //   - lastName string
-func (_e *MockServicer_Expecter) GetVetByLastName(lastName interface{}) *MockServicer_GetVetByLastName_Call {
+func (_e *MockServicer_Expecter) getVetByLastName(lastName interface{}) *MockServicer_GetVetByLastName_Call {
 	return &MockServicer_GetVetByLastName_Call{Call: _e.mock.On("GetVetByLastName", lastName)}
 }
 
@@ -309,7 +309,7 @@ func (_c *MockServicer_GetVetByLastName_Call) RunAndReturn(run func(string) ([]R
 }
 
 // Update provides a mock function with given fields: vet
-func (_m *MockServicer) Update(vet *repository.Vet) (*Response, error) {
+func (_m *MockServicer) update(vet *repository.Vet) (*Response, error) {
 	ret := _m.Called(vet)
 
 	if len(ret) == 0 {
@@ -345,7 +345,7 @@ type MockServicer_Update_Call struct {
 
 // Update is a helper method to define mock.On call
 //   - vet *repository.Vet
-func (_e *MockServicer_Expecter) Update(vet interface{}) *MockServicer_Update_Call {
+func (_e *MockServicer_Expecter) update(vet interface{}) *MockServicer_Update_Call {
 	return &MockServicer_Update_Call{Call: _e.mock.On("Update", vet)}
 }
 

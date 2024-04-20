@@ -19,7 +19,7 @@ type vetServiceMock struct {
 	mock.Mock
 }
 
-func (vetM *vetServiceMock) GetVetById(id int) (*Response, error) {
+func (vetM *vetServiceMock) getVetById(id int) (*Response, error) {
 	args := vetM.Called(id)
 	intf := args.Get(0)
 	val := intf.(Response)
@@ -28,7 +28,7 @@ func (vetM *vetServiceMock) GetVetById(id int) (*Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (vetM *vetServiceMock) GetVetByLastName(lastName string) ([]Response, error) {
+func (vetM *vetServiceMock) getVetByLastName(lastName string) ([]Response, error) {
 	args := vetM.Called(lastName)
 	intf := args.Get(0)
 	val := intf.([]Response)
@@ -37,7 +37,7 @@ func (vetM *vetServiceMock) GetVetByLastName(lastName string) ([]Response, error
 	return ptr, args.Error(1)
 }
 
-func (vetM *vetServiceMock) GetAllVets() ([]Response, error) {
+func (vetM *vetServiceMock) getAllVets() ([]Response, error) {
 	args := vetM.Called()
 	intf := args.Get(0)
 	val := intf.([]Response)
@@ -46,7 +46,7 @@ func (vetM *vetServiceMock) GetAllVets() ([]Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (vetM *vetServiceMock) GetAllVetsWithSpecialties() ([]Response, error) {
+func (vetM *vetServiceMock) getAllVetsWithSpecialties() ([]Response, error) {
 	args := vetM.Called()
 	intf := args.Get(0)
 	val := intf.([]Response)
@@ -55,7 +55,7 @@ func (vetM *vetServiceMock) GetAllVetsWithSpecialties() ([]Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (vetM *vetServiceMock) Create(vet *repository.Vet) (*Response, error) {
+func (vetM *vetServiceMock) create(vet *repository.Vet) (*Response, error) {
 	args := vetM.Called(vet)
 	intf := args.Get(0)
 	val := intf.(Response)
@@ -64,7 +64,7 @@ func (vetM *vetServiceMock) Create(vet *repository.Vet) (*Response, error) {
 	return ptr, args.Error(1)
 }
 
-func (vetM *vetServiceMock) Update(vet *repository.Vet) (*Response, error) {
+func (vetM *vetServiceMock) update(vet *repository.Vet) (*Response, error) {
 	args := vetM.Called(vet)
 	intf := args.Get(0)
 	val := intf.(Response)
@@ -90,7 +90,7 @@ func Test_VetById(t *testing.T) {
 		LastName:  "Cole",
 	}
 
-	vetMock.On("GetVetById", 1).Return(*vetResponse, nil)
+	vetMock.On("getVetById", 1).Return(*vetResponse, nil)
 	vetRouter := NewVetRouter(logger, &vetMock)
 
 	r := setupRouter()
@@ -125,7 +125,7 @@ func Test_VetByLastName(t *testing.T) {
 	}
 	vetResponses[0] = *vetResponse
 
-	vetMock.On("GetVetByLastName", "Ward").Return(vetResponses, nil)
+	vetMock.On("getVetByLastName", "Ward").Return(vetResponses, nil)
 	vetRouter := NewVetRouter(logger, &vetMock)
 
 	r := setupRouter()
