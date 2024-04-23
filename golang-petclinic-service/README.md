@@ -17,7 +17,7 @@ Build a Pet Clinic restful API using the libraries mentioned below.
 * Routing framework: [gin gonic](https://github.com/gin-gonic/gin)
 * Gin Swagger: [gin-swagger](https://github.com/swaggo/gin-swagger)
 * Go Swagger: [go-swagger](https://github.com/go-swagger/go-swagger)
-* Okta JWT: [okta](https://www.okta.com/)
+* Okta JWT: [okta](https://github.com/okta/okta-jwt-verifier-golang)
 * Prometheus Client: [prometheus-client](https://github.com/prometheus/client_golang/prometheus/promhttp)
 * GORM [GORM](https://gorm.io/)
 * Postgresql [postgresql](gorm.io/driver/postgres)
@@ -62,7 +62,6 @@ go get github.com/vektra/mockery/v3
 with-expecter: true
 mockname: "Mock{{.InterfaceName}}"
 inpackage: true
-testonly: true
 case: underscore
 ```
 Run this command to generate the mock files
@@ -130,7 +129,9 @@ database:
 
 and converts it into this struct:
 
+**By my convention, I add postfix Config to the struct name to indicate its type as a configuration struct.**
 ```go
+
 type AppInfoConfig struct {
     Name        string `yaml:"name"`
     Version     string `yaml:"version"`
@@ -151,7 +152,7 @@ type PostgresConfig struct {
 }
 ```
 
-**By convention, I add postfix Config to the struct name to indicate its type as a configuration struct.**
+
 
 ### Components Instantiation
 
