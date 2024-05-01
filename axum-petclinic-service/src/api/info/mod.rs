@@ -3,6 +3,7 @@ use axum::routing::get;
 use derive_builder::Builder;
 use serde::{Serialize};
 use validator::Validate;
+use crate::error::Error;
 
 #[derive(Builder, Debug, Serialize, Validate)]
 #[serde(rename_all = "camelCase")]
@@ -21,7 +22,7 @@ pub fn routes() -> Router {
     Router::new().route("/info", get(info))
 }
 
-async fn info() -> Json<InfoResponse> {
+async fn info() -> Result<Json<InfoResponse>, Error> {
     let info = InfoResponseBuilder::default()
         .version("0.1.0".to_string())
         .name("Rust API".to_string())
@@ -31,5 +32,5 @@ async fn info() -> Json<InfoResponse> {
         .build()
         .unwrap();
 
-    Json(info)
+    Ok(Json(info))
 }

@@ -7,10 +7,13 @@ use tower_http::trace::TraceLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 mod api;
-use crate::api::health;
-use crate::api::info;
+use api::health;
+use api::info;
 
 mod middleware;
+
+mod repository;
+pub mod error;
 
 #[tokio::main]
 async fn main() {
@@ -22,11 +25,7 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-
-    let routes_all = Router::new()
-        .merge(app_routes());
-
-    fn app_routes() -> Router {
+    let app_routes =
         Router::new()
             .merge(health::routes())
             .merge(info::routes())
@@ -34,14 +33,13 @@ async fn main() {
                 TraceLayer::new_for_http(),
                 // Graceful shutdown will wait for outstanding requests to complete.
                 // Add a timeout so requests don't respond forever.
-                TimeoutLayer::new(Duration::from_secs(10))),)
-    }
+                TimeoutLayer::new(Duration::from_secs(10))),);
 
     let listener = TcpListener::bind("127.0.0.1:3003")
         .await
         .unwrap();
     println!("Listening on {}", listener.local_addr().unwrap());
-    axum::serve(listener, routes_all)
+    axum::serve(listener, app_routes)
         .with_graceful_shutdown(shutdown_signal())
         .await
         .unwrap();
