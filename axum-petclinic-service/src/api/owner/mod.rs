@@ -1,28 +1,23 @@
-mod route;
+use axum::{Json, Router};
+use axum::extract::Path;
+use axum::routing::get;
 
-use serde::{Serialize};
-use crate::repository::schema;
+mod model;
 
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Response {
-    id : u32,
-    first_name : String,
-    last_name : String,
-    address : String,
-    city: String,
-    telephone : String,
+pub fn routes() -> Router {
+    // let app_state = AppState { mc };
+    Router::new().route("/owner/id/:id", get(get_owner))
 }
 
-impl From<schema::Owner> for Response {
-    fn from(owner: crate::repository::schema::Owner) -> Self {
-        Self {
-            id: owner.id,
-            first_name: owner.first_name,
-            last_name: owner.last_name,
-            address: owner.address,
-            city: owner.city,
-            telephone: owner.telephone,
-        }
-    }
+async fn get_owner( Path(id): Path<u32>) -> Json<model::Response> {
+    let owner = model::Response {
+        id: id,
+        first_name: "John".to_string(),
+        last_name: "Doe".to_string(),
+        address: "123 Main St".to_string(),
+        city: "".to_string(),
+        telephone: "123-456-7890".to_string(),
+    };
+
+    Json(owner)
 }

@@ -1,0 +1,3 @@
+trait Repositorier {}
+
+struct Repository {}

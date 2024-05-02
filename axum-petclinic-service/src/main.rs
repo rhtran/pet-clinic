@@ -1,3 +1,8 @@
+mod api;
+pub mod error;
+mod middleware;
+mod repository;
+
 use std::time::Duration;
 use axum::{Router};
 use tokio::net::TcpListener;
@@ -5,15 +10,8 @@ use tokio::signal;
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use api::{health, info, owner};
 
-mod api;
-use api::health;
-use api::info;
-
-mod middleware;
-
-mod repository;
-pub mod error;
 
 #[tokio::main]
 async fn main() {
@@ -29,6 +27,7 @@ async fn main() {
         Router::new()
             .merge(health::routes())
             .merge(info::routes())
+            .merge(owner::routes())
             .layer((
                 TraceLayer::new_for_http(),
                 // Graceful shutdown will wait for outstanding requests to complete.
@@ -69,4 +68,3 @@ async fn shutdown_signal() {
         _ = terminate => {},
     }
 }
-

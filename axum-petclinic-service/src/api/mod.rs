@@ -1,7 +1,7 @@
 pub mod health;
 pub mod info;
 
-mod owner;
+pub mod owner;
 mod pet;
 mod vet;
 mod visit;
