@@ -11,7 +11,6 @@ require (
 	github.com/go-ozzo/ozzo-validation/v3 v3.8.1
 	github.com/go-playground/validator/v10 v10.19.0
 	github.com/gofrs/uuid v4.4.0+incompatible
-	github.com/magiconair/properties v1.8.7
 	github.com/okta/okta-jwt-verifier-golang v1.3.1
 	github.com/pressly/goose v2.7.0+incompatible
 	github.com/qiangxue/go-restful-api v1.3.1
@@ -63,6 +62,7 @@ require (
 	github.com/lestrrat-go/jwx v1.2.29 // indirect
 	github.com/lestrrat-go/option v1.0.1 // indirect
 	github.com/lib/pq v1.10.9 // indirect
+	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect

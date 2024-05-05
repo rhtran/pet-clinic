@@ -1,2 +1,2 @@
 pub mod schema;
-mod owner;
+pub mod owner;

@@ -1,4 +1,5 @@
 mod api;
+mod db;
 pub mod error;
 mod middleware;
 mod repository;

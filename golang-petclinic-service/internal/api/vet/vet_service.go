@@ -45,7 +45,7 @@ func (service *Service) getVetByLastName(lastName string) ([]Response, error) {
 	return FromVets(vets), nil
 }
 
-func (service *Service) GetAllVets() ([]Response, error) {
+func (service *Service) getAllVets() ([]Response, error) {
 	vets, err := service.repository.FindAll()
 
 	if err != nil {

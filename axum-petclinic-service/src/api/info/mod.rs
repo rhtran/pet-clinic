@@ -22,7 +22,7 @@ pub fn routes() -> Router {
     Router::new().route("/info", get(info))
 }
 
-async fn info() -> Result<Json<InfoResponse>, Error> {
+async fn info() -> Json<InfoResponse> {
     let info = InfoResponseBuilder::default()
         .version("0.1.0".to_string())
         .name("Rust API".to_string())
@@ -32,5 +32,5 @@ async fn info() -> Result<Json<InfoResponse>, Error> {
         .build()
         .unwrap();
 
-    Ok(Json(info))
+    Json(info)
 }

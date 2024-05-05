@@ -1,3 +1,5 @@
+mod service;
+
 use serde::{Deserialize, Serialize};
 use crate::repository::schema;
 

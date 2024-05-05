@@ -1,8 +1,10 @@
-# Pet Clinic REST API using Axum & Tokio
+# Pet Clinic REST API using [Axum](https://www.youtube.com/watch?v=Wnb_n5YktO8&t=716s) & Tokio
 
 ## Introduction
 * Tokio is an asynchronous runtime for the Rust programming language. It provides the building blocks needed for writing network applications. It gives you the ability to write fast, reliable, and highly concurrent applications.
 * Axum is a web framework built on top of Tokio and Tower. It is designed to be both ergonomic and performant. It is built on top of hyper, a fast and low-level HTTP implementation in Rust.
+
+[Send + Sync](https://www.youtube.com/watch?v=yOezcP-XaIw)
 
 ## Technologies Stacks
 * [Rust](https://www.rust-lang.org/)
@@ -187,4 +189,22 @@ make watch-test-change
 
 
 
+
+
+
+## List of example repositories
+https://github.com/sapati/shelter-project/tree/ep-12
+https://github.com/MSC29/clean-architecture-rust
+https://github.com/flosse/clean-architecture-with-rust
+https://jameseastham.co.uk/post/software-development/hexagaonal-architecture-rust/
+https://kerkour.com/rust-web-application-clean-architecture
+https://github.com/skerkour/black-hat-rust
+https://github.com/skerkour
+https://www.youtube.com/watch?v=CHRNj5oubwc
+https://youtube.com/watch?v=Lrayq0UW7nA
+https://www.youtube.com/watch?v=3biW5NkNnrk&t=455s
+https://www.youtube.com/watch?v=br6nGvqT48w
+https://github.com/Quentin-Piot/axum-diesel-real-world/tree/master
+https://github.com/yuk1ty/stock-metrics
+https://github.com/asomers/mockall/issues/271
 

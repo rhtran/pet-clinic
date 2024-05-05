@@ -10,12 +10,12 @@ axum = { version = "0.7.5", features = ["macros"] }
 derive_builder = {version = "0.20.0"}
 tokio = { version = "1.37.0", features = ["full"] }
 serde = { version = "1.0.199", features = ["derive"] }
+sqlx = { version = "0.7.4", features = [ "runtime-tokio", "tls-rustls", "postgres", "chrono" ] }
 tower-http = { version = "0.5.2", features = ["trace", "timeout"] }
 tracing = { version = "0.1.40" }
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 serde_json = "1.0.116"
 validator = { version = "0.18.1", features = ["derive"] }
-sqlx = { version = "0.7.4", features = ["sqlx-postgres"]}
 chrono = "0.4.38"
 
 [dev-dependencies]

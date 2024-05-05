@@ -3,6 +3,7 @@ use axum::extract::Path;
 use axum::routing::get;
 
 mod model;
+mod service;
 
 pub fn routes() -> Router {
     // let app_state = AppState { mc };
